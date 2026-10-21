@@ -1,0 +1,11 @@
+/* Official Mtaliii Africa branding and capital-city card styling */
+.nav .mtaliii-brand{display:flex!important;align-items:center;flex:0 0 auto;text-decoration:none;line-height:1}
+.nav .mtaliii-brand img{display:block;width:70px;height:70px;object-fit:contain;border-radius:50%;background:#fff}
+.mtaliii-footer-brand img{display:block;width:120px;height:120px;object-fit:contain;border-radius:50%;background:#fff}
+.region-card .country-image{height:195px!important;padding:0!important;display:block!important;position:relative;overflow:hidden;border-radius:14px;background:#173e34!important;background-size:cover!important;background-position:center!important}
+.country-image .city-pending{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:18px;color:white;background:linear-gradient(0deg,rgba(5,31,27,.87),rgba(9,55,44,.13) 85%);pointer-events:none}
+.city-pending strong{font-size:24px;font-weight:800;line-height:1.15;color:#fff}
+.city-pending span{font-size:12px;letter-spacing:.06em;color:#f8db96;margin-top:5px}
+.country-image.has-local-photo .city-pending{background:linear-gradient(0deg,rgba(3,25,22,.78),transparent 72%)}
+.country-image.photo-unavailable{background:linear-gradient(135deg,#0d5148,#b5843f)!important}
+@media(max-width:800px){.nav .mtaliii-brand img{width:56px;height:56px}.region-card .country-image{height:185px!important}}

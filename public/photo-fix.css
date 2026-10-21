@@ -1,0 +1,254 @@
+/* Photographic-first visual design */
+.hero {
+    min-height: 760px;
+    background: #173f33 !important
+}
+
+.hero-bg {
+    background-image: url('https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1800&q=85');
+    background-size: cover;
+    background-position: center;
+    animation: mtPhotoZoom 12s ease-in-out infinite alternate
+}
+
+@keyframes mtPhotoZoom {
+    from {
+        transform: scale(1)
+    }
+
+    to {
+        transform: scale(1.065)
+    }
+}
+
+.hero-shade {
+    background: linear-gradient(90deg, rgba(5, 28, 22, .85) 0%, rgba(5, 28, 22, .52) 48%, rgba(5, 28, 22, .10) 100%) !important
+}
+
+.hero h1 {
+    font-size: clamp(56px, 8.5vw, 122px) !important;
+    line-height: 1.03;
+    max-width: 1100px
+}
+
+.region-card {
+    padding: 0 !important;
+    overflow: hidden;
+    gap: 12px !important
+}
+
+.country-image {
+    height: 230px !important;
+    min-height: 230px;
+    background-color: #6d917e !important;
+    background-size: cover !important;
+    background-position: center !important;
+    border-radius: 0 !important;
+    position: relative
+}
+
+.region-card>.country-top,
+.region-card>h3,
+.region-card>.tag,
+.region-card>p,
+.region-card>.country-foot {
+    margin-left: 23px !important;
+    margin-right: 23px !important
+}
+
+.region-card>.country-foot {
+    margin-bottom: 24px !important;
+    margin-top: auto !important
+}
+
+.exact-photo,
+.destination .photo {
+    background-color: #7d9b86 !important;
+    background-size: cover !important;
+    background-position: center !important
+}
+
+.country-place {
+    overflow: hidden
+}
+
+.country-place .exact-photo {
+    height: 180px !important
+}
+
+.hotel {
+    background-color: #356b56 !important;
+    background-size: cover !important;
+    background-position: center !important;
+    min-height: 260px !important
+}
+
+.animal .photo {
+    background-size: cover !important;
+    background-position: center !important
+}
+
+.illustrative-badge {
+    display: none !important
+}
+
+@media(prefers-reduced-motion:reduce) {
+    .hero-bg {
+        animation: none !important
+    }
+}
+
+.stay-town-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px
+}
+
+.stay-town {
+    border: 1px solid #dce6de;
+    border-radius: 17px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 8px 24px #1233210c
+}
+
+.stay-town-photo {
+    height: 145px;
+    background: #e5ede7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #526a5b;
+    text-align: center;
+    font-size: 12px;
+    padding: 18px;
+    background-size: cover;
+    background-position: center
+}
+
+.stay-town-body {
+    padding: 18px
+}
+
+.stay-town-body small {
+    color: #567663
+}
+
+.stay-town-body h3 {
+    margin: 7px 0 14px
+}
+
+.stay-town-body button {
+    border: 0;
+    background: #164d35;
+    color: white;
+    padding: 11px 14px;
+    border-radius: 9px;
+    cursor: pointer
+}
+
+.stay-detail {
+    padding: 22px;
+    margin: 24px 0;
+    background: #edf4ee;
+    border-radius: 14px
+}
+
+.photo-unavailable {
+    background-image: none !important;
+    background-color: #e4ebe5 !important
+}
+
+/* Premium accommodation gallery */
+.stay-town {
+    transition: transform .25s ease, box-shadow .25s ease
+}
+
+.stay-town:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 18px 40px #12332120
+}
+
+.stay-town-photo {
+    position: relative;
+    height: 190px;
+    padding: 0;
+    overflow: hidden;
+    background: linear-gradient(135deg, #dce9de, #b7d2c6)
+}
+
+.stay-town-photo>span {
+    padding: 24px;
+    font-size: 13px;
+    max-width: 210px;
+    line-height: 1.5
+}
+
+.stay-town-photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .5s ease
+}
+
+.stay-town:hover .stay-town-photo img {
+    transform: scale(1.055)
+}
+
+.stay-photo-credit {
+    position: absolute;
+    bottom: 9px;
+    right: 9px;
+    background: #102f27d9;
+    color: white !important;
+    border-radius: 6px;
+    padding: 5px 8px;
+    font-size: 10px;
+    text-decoration: none
+}
+
+.stay-town-body h3 {
+    font-size: 20px
+}
+
+.stay-town-body button {
+    width: 100%;
+    font-weight: 600
+}
+
+.stay-town-body button:hover {
+    background: #0e3525
+}
+
+.hero-bg {
+    transition: background-image .8s ease
+}
+
+.bigfive .animal {
+    overflow: hidden
+}
+
+.bigfive .animal .photo {
+    transition: transform .6s ease
+}
+
+.bigfive .animal:hover .photo {
+    transform: scale(1.07)
+}
+
+/* Mtaliii - Attraction photographs */
+
+.exact-photo.has-local-photo {
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+.exact-photo.has-local-photo .waiting-photo {
+    display: none !important;
+}
+
+.exact-photo.photo-unavailable .waiting-photo {
+    display: block;
+}

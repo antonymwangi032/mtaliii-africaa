@@ -1,0 +1,8 @@
+/* =========================================
+   MTALIII AFRICA — CLEAN COUNTRY PHOTOGRAPHS
+   Remove unwanted capital-city text
+   ========================================= */
+
+.region-card .country-image .city-pending {
+    display: none !important;
+}

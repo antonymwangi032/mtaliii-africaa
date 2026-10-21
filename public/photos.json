@@ -1,0 +1,10 @@
+{
+  "README": "Add exact, licensed photographs by destination name. Each record: url, subject, credit, source, license. No unverified images are automatically substituted.",
+  "example": {
+    "url": "/assets/photos/your-licensed-photo.jpg",
+    "subject": "Exact named destination",
+    "credit": "Photographer name",
+    "source": "Original source URL",
+    "license": "Verified licence"
+  }
+}
