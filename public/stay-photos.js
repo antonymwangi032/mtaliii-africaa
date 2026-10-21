@@ -1,22 +1,34 @@
 
-/* Mtaliii Africa — Accommodation Photo Loader */
-/* Uses genuine locally saved WebP photographs */
+/* Mtaliii Africa — Optimized Accommodation Photo Loader */
+/* Loads local WebP photos only when cards approach the screen. */
 
 (() => {
     "use strict";
 
+    const observedCards = new WeakSet();
+
+    const photoObserver = "IntersectionObserver" in window
+        ? new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+
+                observer.unobserve(entry.target);
+                applyPhoto(entry.target);
+            });
+        }, {
+            rootMargin: "300px 0px",
+            threshold: 0
+        })
+        : null;
+
     function applyPhoto(element) {
         const key = element.dataset.stayPhoto || "";
-
-        // Existing card keys use "Town, Country".
         const separator = key.lastIndexOf(", ");
 
         if (separator === -1) return;
 
         const town = key.slice(0, separator).trim();
         const country = key.slice(separator + 2).trim();
-
-        // Our accommodation registry uses "Country|Town".
         const registryKey = `${country}|${town}`;
 
         const photos =
@@ -26,7 +38,6 @@
 
         if (!photoURL) return;
 
-        // Avoid loading the same photograph twice.
         if (element.dataset.loadedPhoto === photoURL) {
             return;
         }
@@ -35,7 +46,6 @@
 
         const image = document.createElement("img");
 
-        image.src = photoURL;
         image.alt = `${town}, ${country} accommodation`;
         image.loading = "lazy";
         image.decoding = "async";
@@ -55,14 +65,26 @@
             element.classList.add("has-local-photo");
         };
 
-        // Replace the placeholder with the actual image.
         element.replaceChildren(image);
+
+        // Assigning src starts the actual image request.
+        image.src = photoURL;
     }
 
     function updatePhotos() {
         document
             .querySelectorAll("[data-stay-photo]")
-            .forEach(applyPhoto);
+            .forEach(element => {
+                if (observedCards.has(element)) return;
+
+                observedCards.add(element);
+
+                if (photoObserver) {
+                    photoObserver.observe(element);
+                } else {
+                    applyPhoto(element);
+                }
+            });
     }
 
     function initialize() {
@@ -71,10 +93,12 @@
 
         if (!container) return;
 
-        const observer = new MutationObserver(updatePhotos);
+        const mutationObserver =
+            new MutationObserver(updatePhotos);
 
-        observer.observe(container, {
-            childList: true
+        mutationObserver.observe(container, {
+            childList: true,
+            subtree: true
         });
 
         updatePhotos();
