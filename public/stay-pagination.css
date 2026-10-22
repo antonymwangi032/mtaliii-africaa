@@ -1,0 +1,51 @@
+
+.mtaliii-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin: 28px auto 42px;
+    padding: 10px;
+}
+
+.mtaliii-pagination button {
+    padding: 11px 15px;
+    border: 1px solid #d5dfd8;
+    background: #fff;
+    color: #164d3c;
+    border-radius: 10px;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.mtaliii-pagination button:hover:not(:disabled) {
+    background: #e9f3ed;
+}
+
+.mtaliii-pagination button[aria-current="page"] {
+    background: #164d3c;
+    color: #fff;
+    border-color: #164d3c;
+}
+
+.mtaliii-pagination button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+#stayCount {
+    scroll-margin-top: 110px;
+}
+
+@media (max-width: 600px) {
+    .mtaliii-pagination {
+        gap: 6px;
+    }
+
+    .mtaliii-pagination button {
+        padding: 9px 11px;
+        font-size: 13px;
+    }
+}

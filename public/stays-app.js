@@ -225,6 +225,22 @@
         }
     });
 
+
+    /* MTALIII_STAYS_PAGINATION_V1 */
+
+    const STAYS_PER_PAGE = 12;
+    let currentStayPage = 1;
+
+    const stayPagination = document.createElement("nav");
+    stayPagination.id = "stayPagination";
+    stayPagination.className = "mtaliii-pagination";
+    stayPagination.setAttribute(
+        "aria-label",
+        "Accommodation destination pages"
+    );
+
+    root.insertAdjacentElement("afterend", stayPagination);
+
     function renderCards() {
         const query = search.value.trim().toLowerCase();
         const selectedCountry = countryFilter.value;
@@ -244,13 +260,33 @@
                 }))
         );
 
-        count.textContent =
-            matches.length +
-            " accommodation destinations across " +
-            countries.length +
-            " countries";
+        const totalPages = Math.max(
+            1,
+            Math.ceil(matches.length / STAYS_PER_PAGE)
+        );
 
-        root.innerHTML = matches.map(({ country, town }) => `
+        currentStayPage = Math.max(
+            1,
+            Math.min(currentStayPage, totalPages)
+        );
+
+        const start = (currentStayPage - 1) * STAYS_PER_PAGE;
+
+        const visible = matches.slice(
+            start,
+            start + STAYS_PER_PAGE
+        );
+
+        count.textContent = matches.length
+            ? matches.length +
+              " accommodation destinations · showing " +
+              (start + 1) + "–" +
+              (start + visible.length) +
+              " · page " + currentStayPage +
+              " of " + totalPages
+            : "No matching accommodation destinations.";
+
+        root.innerHTML = visible.map(({ country, town }) => `
             <article class="stay-town">
                 <div
                     class="stay-town-photo"
@@ -277,13 +313,87 @@
             </article>
         `).join("");
 
-        root.querySelectorAll(
-            "[data-stay-photo]"
-        ).forEach(element => {
-            window.mtaliiiIllustrate?.(
-                element,
-                element.dataset.stayPhoto
-            );
+        // Preserve existing destination photographs.
+        root.querySelectorAll("[data-stay-photo]")
+            .forEach(element => {
+                window.mtaliiiIllustrate?.(
+                    element,
+                    element.dataset.stayPhoto
+                );
+            });
+
+        if (totalPages <= 1) {
+            stayPagination.replaceChildren();
+            return;
+        }
+
+        const pageNumbers = [...new Set([
+            1,
+            totalPages,
+            ...Array.from(
+                { length: 5 },
+                (_, index) => currentStayPage + index - 2
+            ).filter(page =>
+                page >= 1 && page <= totalPages
+            )
+        ])].sort((a, b) => a - b);
+
+        stayPagination.innerHTML = `
+            <button
+                type="button"
+                data-stay-page="${currentStayPage - 1}"
+                ${currentStayPage === 1 ? "disabled" : ""}
+            >
+                ← Previous
+            </button>
+
+            ${pageNumbers.map(page => `
+                <button
+                    type="button"
+                    data-stay-page="${page}"
+                    ${page === currentStayPage
+                        ? 'aria-current="page"'
+                        : ""}
+                >
+                    ${page}
+                </button>
+            `).join("")}
+
+            <button
+                type="button"
+                data-stay-page="${currentStayPage + 1}"
+                ${currentStayPage === totalPages
+                    ? "disabled"
+                    : ""}
+            >
+                Next →
+            </button>
+        `;
+
+        stayPagination.querySelectorAll(
+            "button[data-stay-page]"
+        ).forEach(button => {
+            button.onclick = () => {
+                const requested = Number(
+                    button.dataset.stayPage
+                );
+
+                if (
+                    requested < 1 ||
+                    requested > totalPages ||
+                    requested === currentStayPage
+                ) {
+                    return;
+                }
+
+                currentStayPage = requested;
+                renderCards();
+
+                count.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+            };
         });
     }
 
@@ -1539,15 +1649,15 @@
         openModal();
     };
 
-    countryFilter.addEventListener(
-        "change",
-        renderCards
-    );
+    countryFilter.addEventListener("change", () => {
+        currentStayPage = 1;
+        renderCards();
+    });
 
-    search.addEventListener(
-        "input",
-        renderCards
-    );
+    search.addEventListener("input", () => {
+        currentStayPage = 1;
+        renderCards();
+    });
 
     renderCards();
 })();
