@@ -49,3 +49,40 @@
         font-size: 13px;
     }
 }
+
+/* MTALIII AFRICA — DISCOVER MORE STAYS */
+
+.mtaliii-discover-more {
+  display: flex;
+  justify-content: center;
+  margin: 28px 0 12px;
+}
+
+.mtaliii-discover-button {
+  padding: 13px 30px;
+  background: #205c3b;
+  color: #ffffff;
+  border: 1px solid #205c3b;
+  border-radius: 30px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .2s ease, transform .2s ease;
+}
+
+.mtaliii-discover-button:hover {
+  background: #17472d;
+  transform: translateY(-2px);
+}
+
+.mtaliii-discover-button:focus-visible {
+  outline: 3px solid #9bcbaa;
+  outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  .mtaliii-discover-button {
+    width: min(100%, 280px);
+  }
+}

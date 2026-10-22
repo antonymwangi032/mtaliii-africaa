@@ -1,6 +1,6 @@
 (()=>{'use strict';
 // Keep registration and planning out of the page until requested by the visitor.
-for(const id of ['plan','register']){const el=document.getElementById(id);if(!el)continue;el.hidden=true;}
+for(const id of ['plan']){const el=document.getElementById(id);if(!el)continue;el.hidden=true;}
 function openPanel(id){for(const other of ['plan','register']){const el=document.getElementById(other);if(el)el.hidden=other!==id;}const el=document.getElementById(id);if(el)requestAnimationFrame(()=>el.scrollIntoView({behavior:'smooth',block:'start'}));}
 document.addEventListener('click',e=>{const a=e.target.closest('a[href="#plan"],a[href="#register"]');if(a){e.preventDefault();openPanel(a.getAttribute('href').slice(1));}});
 // Real photo retrieval uses Wikipedia's subject-specific page thumbnail, not an unrelated stock photograph.

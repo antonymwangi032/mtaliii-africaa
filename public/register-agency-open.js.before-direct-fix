@@ -1,0 +1,37 @@
+(() => {
+  "use strict";
+
+  function openRegistration() {
+    const section = document.getElementById("register");
+    if (!section) return;
+
+    section.hidden = false;
+    section.removeAttribute("hidden");
+    section.style.removeProperty("display");
+
+    const top =
+      section.getBoundingClientRect().top +
+      window.scrollY - 115;
+
+    window.scrollTo({
+      top: Math.max(0, top),
+      behavior: "smooth"
+    });
+  }
+
+  document.addEventListener("click", event => {
+    const link = event.target.closest('a[href="#register"]');
+    if (!link) return;
+
+    event.preventDefault();
+
+    history.pushState(null, "", "#register");
+    openRegistration();
+  });
+
+  window.addEventListener("hashchange", () => {
+    if (location.hash === "#register") {
+      openRegistration();
+    }
+  });
+})();

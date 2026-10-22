@@ -1,0 +1,72 @@
+(() => {
+  "use strict";
+
+  const partners = [
+    "AfriVoya",
+    "Savanna Trails Africa",
+    "Ubuntu Journeys",
+    "Zuri Africa Travels",
+    "Asili Africa Expeditions",
+    "RoamAfrica",
+    "Tembea Africa",
+    "Acacia Crown Travel",
+    "Jua Africa Adventures",
+    "WildRoot Africa",
+    "Horizon Africa Travel",
+    "Nyota Trails Africa",
+    "Kifaru Expeditions",
+    "AfriQuest Travels",
+    "Mwangaza Africa Travels"
+  ];
+
+  function renderPartners() {
+    const section = document.getElementById("agencies");
+    const agencyList = document.getElementById("agencyList");
+
+    if (!section || !agencyList) return;
+
+    let container = document.getElementById("featuredTourPartners");
+
+    if (!container) {
+      container = document.createElement("div");
+      container.id = "featuredTourPartners";
+      container.className = "mtaliii-featured-partners";
+      agencyList.parentNode.insertBefore(container, agencyList);
+    }
+
+    container.replaceChildren();
+
+    const heading = document.createElement("h3");
+    heading.textContent = "Our Tours and Travels Partners";
+    container.appendChild(heading);
+
+    const grid = document.createElement("div");
+    grid.className = "mtaliii-featured-grid";
+
+    partners.forEach((name, index) => {
+      const card = document.createElement("article");
+      card.className = "mtaliii-featured-card";
+
+      const number = document.createElement("span");
+      number.className = "mtaliii-partner-number";
+      number.textContent = String(index + 1).padStart(2, "0");
+
+      const title = document.createElement("h4");
+      title.textContent = name;
+
+      const description = document.createElement("p");
+      description.textContent = "Mtaliii Africa Tour Partner";
+
+      card.append(number, title, description);
+      grid.appendChild(card);
+    });
+
+    container.appendChild(grid);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", renderPartners);
+  } else {
+    renderPartners();
+  }
+})();

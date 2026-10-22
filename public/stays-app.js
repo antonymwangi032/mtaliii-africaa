@@ -226,14 +226,14 @@
     });
 
 
-    /* MTALIII_STAYS_PAGINATION_V1 */
+    /* MTALIII_STAYS_DISCOVER_MORE_V1 */
 
     const STAYS_PER_PAGE = 12;
-    let currentStayPage = 1;
+    let visibleStayCount = STAYS_PER_PAGE;
 
-    const stayPagination = document.createElement("nav");
+    const stayPagination = document.createElement("div");
     stayPagination.id = "stayPagination";
-    stayPagination.className = "mtaliii-pagination";
+    stayPagination.className = "mtaliii-discover-more";
     stayPagination.setAttribute(
         "aria-label",
         "Accommodation destination pages"
@@ -260,30 +260,12 @@
                 }))
         );
 
-        const totalPages = Math.max(
-            1,
-            Math.ceil(matches.length / STAYS_PER_PAGE)
-        );
-
-        currentStayPage = Math.max(
-            1,
-            Math.min(currentStayPage, totalPages)
-        );
-
-        const start = (currentStayPage - 1) * STAYS_PER_PAGE;
-
-        const visible = matches.slice(
-            start,
-            start + STAYS_PER_PAGE
-        );
+        const visible = matches.slice(0, visibleStayCount);
 
         count.textContent = matches.length
             ? matches.length +
               " accommodation destinations · showing " +
-              (start + 1) + "–" +
-              (start + visible.length) +
-              " · page " + currentStayPage +
-              " of " + totalPages
+              visible.length
             : "No matching accommodation destinations.";
 
         root.innerHTML = visible.map(({ country, town }) => `
@@ -322,79 +304,21 @@
                 );
             });
 
-        if (totalPages <= 1) {
-            stayPagination.replaceChildren();
-            return;
-        }
+        stayPagination.replaceChildren();
 
-        const pageNumbers = [...new Set([
-            1,
-            totalPages,
-            ...Array.from(
-                { length: 5 },
-                (_, index) => currentStayPage + index - 2
-            ).filter(page =>
-                page >= 1 && page <= totalPages
-            )
-        ])].sort((a, b) => a - b);
+        if (visible.length < matches.length) {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "mtaliii-discover-button";
+            button.textContent = "Discover More Stays ↓";
 
-        stayPagination.innerHTML = `
-            <button
-                type="button"
-                data-stay-page="${currentStayPage - 1}"
-                ${currentStayPage === 1 ? "disabled" : ""}
-            >
-                ← Previous
-            </button>
-
-            ${pageNumbers.map(page => `
-                <button
-                    type="button"
-                    data-stay-page="${page}"
-                    ${page === currentStayPage
-                        ? 'aria-current="page"'
-                        : ""}
-                >
-                    ${page}
-                </button>
-            `).join("")}
-
-            <button
-                type="button"
-                data-stay-page="${currentStayPage + 1}"
-                ${currentStayPage === totalPages
-                    ? "disabled"
-                    : ""}
-            >
-                Next →
-            </button>
-        `;
-
-        stayPagination.querySelectorAll(
-            "button[data-stay-page]"
-        ).forEach(button => {
             button.onclick = () => {
-                const requested = Number(
-                    button.dataset.stayPage
-                );
-
-                if (
-                    requested < 1 ||
-                    requested > totalPages ||
-                    requested === currentStayPage
-                ) {
-                    return;
-                }
-
-                currentStayPage = requested;
+                visibleStayCount += STAYS_PER_PAGE;
                 renderCards();
-
-                count.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                });
             };
-        });
+
+            stayPagination.appendChild(button);
+        }
     }
 
     if (oldDetail) {

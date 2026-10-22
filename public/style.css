@@ -2116,3 +2116,467 @@ body.mt-modal-open {
         gap: 6px;
     }
 }
+/* MTALIII AFRICA — TOUR PARTNERS ONLY */
+
+#agencies .mtaliii-partner-intro {
+  margin: 24px 0;
+  padding: 25px;
+  border-radius: 18px;
+  background: #f5f8f5;
+  border: 1px solid #e2ebe2;
+}
+
+#agencies .mtaliii-partner-intro h3 {
+  margin: 0 0 10px;
+  font-size: 22px;
+}
+
+#agencies .mtaliii-partner-intro p {
+  margin: 0;
+  line-height: 1.7;
+}
+
+#agencies .mtaliii-demo-partners {
+  margin-top: 35px;
+  padding-top: 25px;
+  border-top: 1px solid #e5e5e5;
+}
+
+#agencies .mtaliii-demo-partners h3 {
+  margin-bottom: 10px;
+}
+
+#agencies .mtaliii-demo-partners > p {
+  margin-bottom: 20px;
+  line-height: 1.7;
+}
+
+#agencies .agencygrid {
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  #agencies .mtaliii-partner-intro {
+    padding: 18px;
+  }
+}
+/* MTALIII AFRICA — AGENCY REGISTRATION */
+
+#register {
+  scroll-margin-top: 90px;
+}
+
+#register[hidden] {
+  display: none !important;
+}
+
+#register .portal-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: stretch;
+}
+
+#register #registerForm {
+  width: 100%;
+  min-width: 0;
+}
+
+#register .agency-registration-visual {
+  position: relative;
+  min-height: 430px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #193d2b;
+}
+
+#register .agency-registration-visual img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  object-fit: cover;
+}
+
+#register .agency-registration-visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, .75),
+    rgba(0, 0, 0, .05) 70%
+  );
+}
+
+#register .agency-registration-caption {
+  position: absolute;
+  z-index: 1;
+  bottom: 28px;
+  left: 28px;
+  right: 28px;
+  color: white;
+}
+
+#register .agency-registration-caption span {
+  font-size: 11px;
+  letter-spacing: 2px;
+  font-weight: 700;
+}
+
+#register .agency-registration-caption h3 {
+  margin: 12px 0;
+  color: white;
+  font-size: 27px;
+}
+
+#register .agency-registration-caption p {
+  margin: 0;
+  color: #f0f0f0;
+  line-height: 1.6;
+}
+
+@media (max-width: 800px) {
+  #register .portal-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #register .agency-registration-visual {
+    min-height: 260px;
+  }
+}
+
+/* MTALIII AFRICA — COMPACT PARTNER REGISTRATION */
+
+#register {
+  padding-top: 35px;
+  padding-bottom: 40px;
+}
+
+#register .section-head {
+  margin-bottom: 20px;
+}
+
+#register .section-head h2 {
+  font-size: clamp(28px, 3vw, 42px);
+  line-height: 1.15;
+}
+
+#register .section-head p {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+#register .portal-grid {
+  width: 100%;
+  max-width: none;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+#register #registerForm {
+  width: 100%;
+  max-width: none;
+  padding: 24px;
+}
+
+#register #registerForm h3 {
+  font-size: 24px;
+  margin-bottom: 14px;
+}
+
+#register #registerForm label {
+  margin-bottom: 10px;
+}
+
+#register #registerForm input {
+  min-height: 42px;
+}
+
+#register .agency-registration-visual {
+  position: relative;
+  min-height: 0;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 10px;
+  padding: 10px;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #e8eee6;
+}
+
+#register .agency-registration-visual > img {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+#register .agency-registration-visual::after {
+  display: none;
+}
+
+#register .agency-registration-caption {
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  bottom: 22px;
+  padding: 14px 18px;
+  background: rgba(14, 49, 34, .86);
+  border-radius: 12px;
+  color: white;
+}
+
+#register .agency-registration-caption h3 {
+  font-size: 20px;
+  margin: 5px 0;
+}
+
+#register .agency-registration-caption p {
+  font-size: 12px;
+}
+
+@media (max-width: 800px) {
+  #register .portal-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #register .agency-registration-visual {
+    height: 440px;
+  }
+}
+
+
+/* MTALIII AFRICA — COMPACT REGISTRATION FINAL LAYOUT */
+
+#register {
+  padding-top: 24px !important;
+  padding-bottom: 28px !important;
+}
+
+#register .section-head {
+  margin-bottom: 14px !important;
+}
+
+#register .section-head h2 {
+  font-size: clamp(26px, 2.8vw, 38px);
+  line-height: 1.15;
+}
+
+#register .portal-grid {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr) !important;
+  gap: 16px !important;
+  align-items: stretch;
+  width: 100%;
+}
+
+#register #registerForm {
+  padding: 20px !important;
+  margin: 0;
+}
+
+#register #registerForm h3 {
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+
+#register #registerForm label {
+  margin-bottom: 8px;
+}
+
+#register #registerForm input,
+#register #registerForm select,
+#register #registerForm textarea {
+  padding: 9px 12px;
+  min-height: 40px;
+}
+
+#register .agency-registration-visual {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  grid-template-rows: minmax(0, 1fr) !important;
+  gap: 10px !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  padding: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+#register .agency-registration-visual > img {
+  position: relative !important;
+  inset: auto !important;
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+#register .agency-registration-caption {
+  grid-column: 1 / -1;
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+  padding: 12px 16px;
+}
+
+#register .agency-registration-caption h3 {
+  font-size: 18px;
+  margin: 4px 0;
+}
+
+#register .agency-registration-caption p {
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+@media (max-width: 800px) {
+  #register .portal-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  #register .agency-registration-visual {
+    height: 260px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  #register .agency-registration-visual {
+    height: 210px !important;
+    gap: 6px !important;
+  }
+
+  #register .agency-registration-caption {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    padding: 8px 10px;
+  }
+}
+
+
+/* MTALIII — AGENCY REGISTRATION FEEDBACK */
+
+#register #registerMessage:not(:empty) {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #edf5ef;
+  border: 1px solid #b9d9c2;
+  color: #174d2e;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+#register #registerMessage:empty {
+  display: none !important;
+}
+
+
+/* MTALIII AGENCY REGISTRATION — FEEDBACK */
+
+#register #registerMessage[data-status="success"] {
+  display: block !important;
+  background: #e8f5eb !important;
+  border: 1px solid #a9d7b6 !important;
+  color: #176234 !important;
+  padding: 12px 14px !important;
+  border-radius: 10px;
+}
+
+#register #registerMessage[data-status="error"] {
+  display: block !important;
+  background: #fff0ee !important;
+  border: 1px solid #efb9b3 !important;
+  color: #a52d25 !important;
+  padding: 12px 14px !important;
+  border-radius: 10px;
+}
+
+#register #registerMessage[data-status="loading"] {
+  display: block !important;
+  background: #eef3f8 !important;
+  border: 1px solid #c8d9e8 !important;
+  color: #315879 !important;
+  padding: 12px 14px !important;
+  border-radius: 10px;
+}
+
+
+/* DESTINATION SPOTLIGHT NAVIGATION */
+
+#destinations {
+  display: block;
+  position: relative;
+  scroll-margin-top: 115px;
+}
+
+
+/* MTALIII AFRICA — RELIABLE AGENCY REGISTRATION */
+
+#register {
+  scroll-margin-top: 115px;
+}
+
+#register[hidden] {
+  display: none !important;
+}
+
+#register #registerMessage:empty {
+  display: none !important;
+}
+
+#register #registerMessage:not(:empty) {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  margin-top: 12px;
+  padding: 12px 15px;
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+#register #registerMessage[data-status="success"] {
+  background: #e8f5eb !important;
+  color: #176234 !important;
+  border: 1px solid #a9d7b6 !important;
+}
+
+#register #registerMessage[data-status="error"] {
+  background: #fff0ee !important;
+  color: #a52d25 !important;
+  border: 1px solid #efb9b3 !important;
+}
+
+#register #registerMessage[data-status="loading"] {
+  background: #eef3f8 !important;
+  color: #315879 !important;
+  border: 1px solid #c8d9e8 !important;
+}
+
+
+/* MTALIII — PERMANENT REGISTRATION VISIBILITY FIX */
+
+#register:not([hidden]) {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  scroll-margin-top: 115px;
+}
+

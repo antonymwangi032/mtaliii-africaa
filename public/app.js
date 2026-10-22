@@ -964,7 +964,7 @@ if ($('#registerForm')) {
 
             if ($('#registerMessage')) {
                 $('#registerMessage').textContent =
-                    '✓ ' + response.message;
+                    '✓ Application submitted successfully. Your agency is awaiting administrator approval.';
             }
 
             form.reset();
@@ -972,7 +972,9 @@ if ($('#registerForm')) {
         } catch (error) {
             if ($('#registerMessage')) {
                 $('#registerMessage').textContent =
-                    error.message;
+                    /already registered/i.test(error.message || '')
+                        ? 'This email is already registered. Please use your existing account.'
+                        : 'Registration unsuccessful: ' + (error.message || 'Please try again.');
             }
         }
     };

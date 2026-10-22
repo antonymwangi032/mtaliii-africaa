@@ -1,0 +1,60 @@
+#mtPartnerSelector {
+  padding: 22px;
+  margin: 22px 0;
+  background: #f5f8f5;
+  border: 1px solid #dce8dd;
+  border-radius: 16px;
+}
+
+#mtPartnerSelector h3 {
+  margin: 0 0 8px;
+  font-size: 20px;
+  color: #193d2b;
+}
+
+#mtPartnerSelector p {
+  margin: 0 0 15px;
+  line-height: 1.6;
+}
+
+#mtPartnerSelector select {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #cad9ce;
+  border-radius: 10px;
+  background: white;
+  color: #193d2b;
+  font: inherit;
+}
+
+.mt-partner-controls {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.mt-partner-controls button {
+  padding: 11px 18px;
+  border-radius: 9px;
+  border: 1px solid #28653c;
+  background: #28653c;
+  color: white;
+  cursor: pointer;
+}
+
+.mt-partner-controls button:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+#mtPartnerSelector .mt-partner-status {
+  margin: 14px 0 0;
+  font-weight: 600;
+  color: #28653c;
+}
+
+@media (max-width: 480px) {
+  .mt-partner-controls {
+    flex-direction: column;
+  }
+}

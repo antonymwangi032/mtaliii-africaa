@@ -31,6 +31,9 @@
     <link rel="stylesheet" href="/welcome-section.css">
     <link rel="stylesheet" href="/country-cards-clean.css">
 
+    <link rel="stylesheet" href="/featured-tour-partners.css">
+    <link rel="stylesheet" href="/trip-partner-selector.css">
+
 <body>
 
     <!-- ===================================== -->
@@ -45,7 +48,7 @@
 
         <nav>
             <a href="#countries">Countries</a>
-            <a href="#countries">Destinations</a>
+            <a href="#destinations">Destinations</a>
             <a href="#wildlife">The Big Five</a>
             <a href="#stayDirectory">Luxury stays</a>
             <a href="#agencies">Tour partners</a>
@@ -275,7 +278,8 @@
 
                     <div class="spotlight-content">
 
-                        <span class="eyebrow">
+                        <span id="destinations" class="mtaliii-destination-anchor" aria-hidden="true"></span>
+<span class="eyebrow">
                             DESTINATION SPOTLIGHT · EXPLORE AFRICA
                         </span>
 
@@ -440,39 +444,25 @@
         <section class="section agencies" id="agencies">
 
             <div class="section-head">
-
                 <div>
-
-                    <span class="eyebrow">
-                        EXPLORE WITH CONFIDENCE
-                    </span>
-
-                    <h2>
-                        Choose your <i>travel partner.</i>
-                    </h2>
-
+                    <span class="eyebrow">EXPLORE AFRICA WITH CONFIDENCE</span>
+                    <h2>Our Tours and <i>Travels Partners.</i></h2>
                 </div>
 
                 <p>
-                    Only approved real operators can be publicly listed.
-                    Approval requires manual review and independent
-                    licence checks.
+                    Discover Africa with trusted travel professionals.
+                    Our partner agencies help travellers explore beautiful
+                    destinations, plan memorable journeys and experience
+                    the best of Africa.
                 </p>
-
             </div>
 
-            <div id="agencyList" class="agencygrid"></div>
 
-            <details class="demo">
 
-                <summary>
-                    View 10 fictional agency examples
-                    (demonstration only)
-                </summary>
+            <!-- Existing approved-agency rendering remains connected -->
+            <div id="agencyList" class="agencygrid" aria-live="polite"></div>
 
-                <div id="demoAgents"></div>
 
-            </details>
 
             <p class="note"></p>
 
@@ -655,7 +645,7 @@
         <!-- AGENCY REGISTRATION -->
         <!-- ===================================== -->
 
-        <section class="section account" id="register" hidden>
+        <section class="section account" id="register">
 
             <div class="section-head">
 
@@ -680,7 +670,7 @@
 
             <div class="portal-grid">
 
-                <form id="registerForm" class="form">
+                <form id="registerForm" class="form" method="post" action="/api/register">
 
                     <h3>Register your agency</h3>
 
@@ -723,6 +713,22 @@
                     <p class="form-message" id="registerMessage" role="status"></p>
 
                 </form>
+                <div class="agency-registration-visual">
+    <img
+      class="agency-registration-second-image"
+      src="/images/spotlight/africa-partnership.png"
+      alt="Travellers exploring an African safari destination"
+      loading="lazy"
+    >
+                    <img src="/images/spotlight/africa-landscape.webp"
+                        alt="African landscape representing travel partnerships" loading="lazy">
+                    <div class="agency-registration-caption">
+                        <span>PARTNER WITH MTALIII AFRICA</span>
+                        <h3>Growing together across Africa.</h3>
+                        <p>Connecting travellers, destinations and travel professionals.</p>
+                    </div>
+                </div>
+
 
             </div>
 
@@ -757,7 +763,7 @@
 
             <strong>Explore</strong>
 
-            <a href="#countries">Destinations</a>
+            <a href="#destinations">Destinations</a>
             <a href="#stays">Hotels</a>
             <a href="#agencies">Travel partners</a>
 
@@ -890,20 +896,21 @@
     <script src="accommodation-itinerary.js"></script>
 
 
-    <script src="app.js"></script>
 
     <!-- Keep your other existing scripts here -->
 
-    <script src="stays-data.js"></script>
-    <script src="stays-app.js"></script>
-    <script src="accommodation-itinerary.js"></script>
+
 
     <!-- New shared planner -->
     <script src="journey-planner.js"></script>
 
     <!-- Existing navigation integration -->
-    <script src="journey-integration.js"></script>
+    <script src="/featured-tour-partners.js"></script>
+    <script src="/trip-partner-selector.js"></script>
+    <script src="/register-agency-open.js"></script>
 
+    <script src="/agency-registration-feedback.js"></script>
+    <script src="/landing-page-control.js"></script>
 </body>
 
 </html>
