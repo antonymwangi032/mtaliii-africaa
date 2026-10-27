@@ -33,3 +33,6 @@ server.js.before-*
 package.json.before-*
 package-lock.json.before-*
 public/burundi-photo-review.html
+
+# Private database backups
+mtaliii-private-backups/
