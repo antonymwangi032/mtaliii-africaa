@@ -18,21 +18,19 @@
         rel="stylesheet">
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="region.css">
+    <link rel="stylesheet" href="/css/core/style.css">
+    <link rel="stylesheet" href="/css/core/region.css">
     <link rel="stylesheet" href="photo-fix.css">
     <link rel="stylesheet" href="/hero-static.css">
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/images/branding/mtaliii-favicon.png">
 
     <link rel="stylesheet" href="big-five.css">
-    <link rel="stylesheet" href="/hero-slideshow.css">
-
-    <link rel="stylesheet" href="/welcome-section.css">
+    <link rel="stylesheet" href="/css/core/welcome-section.css">
     <link rel="stylesheet" href="/country-cards-clean.css">
 
     <link rel="stylesheet" href="/featured-tour-partners.css">
-    <link rel="stylesheet" href="/trip-partner-selector.css">
+    <link rel="stylesheet" href="/css/agencies/trip-partner-selector.css">
 
 <body>
 
@@ -182,11 +180,11 @@
                 <div class="mt-welcome-visuals">
 
                     <div class="mt-welcome-map">
-                        <img src="/images/welcome/africa-map.png" alt="Black silhouette map of Africa" loading="lazy">
+                        <img src="/images/welcome/africa-map.png" alt="Black silhouette map of Africa" loading="eager">
                     </div>
 
                     <div class="mt-welcome-photo">
-                        <img src="/images/welcome/maasai-culture.webp" alt="Maasai cultural heritage" loading="lazy">
+                        <img src="/images/welcome/maasai-culture.webp" alt="Maasai cultural heritage" loading="eager">
                     </div>
 
                 </div>
@@ -300,7 +298,7 @@
                     <div class="spotlight-visual">
 
                         <img src="/images/spotlight/africa-landscape.webp" alt="Beautiful African landscape"
-                            loading="lazy">
+                            loading="eager">
 
                         <div class="spotlight-image-label">
                             <span>AFRICA IS CALLING</span>
@@ -407,7 +405,7 @@
                 <div class="stay-luxury-image">
 
                     <img src="/images/accommodations/luxury-villa.webp"
-                        alt="Modern African luxury villa surrounded by beautiful scenery" loading="lazy">
+                        alt="Modern African luxury villa surrounded by beautiful scenery" loading="eager">
 
                 </div>
 
@@ -630,6 +628,18 @@
                     Send my travel enquiry ↗
                 </button>
 
+<a
+    id="mtaliiiWhatsApp"
+    class="mtaliii-whatsapp-link"
+    href="https://wa.me/254715767638?text=Hello%20Mtaliii%20Africa!%20I%20would%20like%20help%20planning%20my%20African%20trip."
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Chat with Mtaliii Africa on WhatsApp"
+>
+    Chat on WhatsApp ↗
+</a>
+
+
                 <div class="form-message" id="tripMessage" role="status"></div>
 
                 <small>
@@ -718,10 +728,10 @@
       class="agency-registration-second-image"
       src="/images/spotlight/africa-partnership.png"
       alt="Travellers exploring an African safari destination"
-      loading="lazy"
+      loading="eager"
     >
                     <img src="/images/spotlight/africa-landscape.webp"
-                        alt="African landscape representing travel partnerships" loading="lazy">
+                        alt="African landscape representing travel partnerships" loading="eager">
                     <div class="agency-registration-caption">
                         <span>PARTNER WITH MTALIII AFRICA</span>
                         <h3>Growing together across Africa.</h3>
@@ -742,14 +752,22 @@
     <!-- FOOTER -->
     <!-- ===================================== -->
 
-    <footer>
+    
+
+
+
+
+
+
+
+<footer>
 
         <div>
 
             <div class="logo mtaliii-footer-brand">
 
                 <img src="/images/branding/mtaliii-logo.webp" alt="Mtaliii Africa" width="120" height="120"
-                    loading="lazy">
+                    loading="eager">
 
             </div>
 
@@ -762,6 +780,18 @@
         <div>
 
             <strong>Explore</strong>
+
+    <a
+        href="https://www.tiktok.com/@mtaliii.africa"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mtaliii-footer-tiktok"
+        style="display:inline-flex;align-items:center;gap:8px;color:inherit;text-decoration:none;"
+        aria-label="Follow Mtaliii Africa on TikTok"
+    >
+        TikTok · @mtaliii.africa ↗
+    </a>
+
 
             <a href="#destinations">Destinations</a>
             <a href="#stays">Hotels</a>
@@ -795,9 +825,12 @@
 
         </div>
 
-        <div class="copyright">
-            © 2026 Mtaliii Africa · Discover Africa beautifully
-        </div>
+        
+        
+        
+<div class="copyright mtaliii-one-line">
+  © <span class="mtaliii-copyright-year">2026</span> Mtaliii Africa · Discover Africa Beautifully | Designed &amp; Developed by <strong>Digital Architects Limited</strong>
+</div>
 
     </footer>
 
@@ -805,86 +838,47 @@
     <!-- MAIN WEBSITE JAVASCRIPT -->
     <!-- ===================================== -->
 
-    <script src="destinations.js"></script>
-    <script src="app.js"></script>
+    <script src="/js/destinations/destinations.js"></script>
+    <script src="/js/core/app.js"></script>
 
     <!-- Regional destinations -->
-    <script src="region.js"></script>
-    <script src="region-app.js"></script>
+    <script src="/js/core/region.js"></script>
+    <script src="/js/core/region-app.js"></script>
 
     <!-- Website enhancements -->
-    <script src="enhancements.js"></script>
+    <script src="/js/core/enhancements.js"></script>
 
     <!-- Attraction photographs -->
-    <script src="photo-registry.js"></script>
-    <script src="photo-layer.js"></script>
+    <script src="/js/photos/photo-registry.js"></script>
+    <script src="/js/photos/photo-layer.js"></script>
+
+    <script src="/js/photos/burundi-photo-layer.js"></script>
     <!-- Africa-wide Destination Spotlight -->
-    <script src="destination-spotlight.js"></script>
+    <script src="/js/destinations/destination-spotlight.js"></script>
 
     <!-- ===================================== -->
     <!-- ACCOMMODATION JAVASCRIPT -->
     <!-- ===================================== -->
 
     <!-- Accommodation destination data -->
-    <script src="stays-data.js"></script>
+    <script src="/js/stays/stays-data.js"></script>
 
     <!-- NEW: Accommodation image registry -->
-    <script src="accommodation-photo-registry.js"></script>
+    <script src="/js/photos/accommodation-photo-registry.js"></script>
 
     <!-- Accommodation destination cards -->
-    <script src="stays-app.js"></script>
+    <script src="/js/stays/stays-app.js"></script>
 
     <!-- Existing accommodation photo catalogue -->
-    <script src="stay-photo-catalog.js"></script>
+    <script src="/js/photos/stay-photo-catalog.js"></script>
 
     <!-- Accommodation photo loader -->
-    <script src="stay-photos.js"></script>
+    <script src="/js/photos/stay-photos.js"></script>
 
-    <script src="big-five.js"></script>
+    <script src="/js/tours/big-five.js"></script>
 
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-
-            const countrySelect = document.getElementById("county");
-
-            if (!countrySelect) return;
-
-            const countries = [
-                "Kenya",
-                "Tanzania",
-                "Uganda",
-                "Rwanda",
-                "Burundi",
-                "Democratic Republic of the Congo",
-                "South Sudan",
-                "Somalia",
-                "Ethiopia",
-                "Djibouti",
-                "Eritrea",
-                "Seychelles",
-                "Comoros",
-                "Mauritius",
-                "Madagascar"
-            ];
-
-            const existingValues = new Set(
-                Array.from(countrySelect.options).map(option => option.value)
-            );
-
-            countrySelect.options[0].textContent = "All 15 countries";
-
-            countries.forEach(country => {
-                if (existingValues.has(country)) return;
-
-                const option = document.createElement("option");
-                option.value = country;
-                option.textContent = country;
-                countrySelect.appendChild(option);
-            });
-
-        });
-    </script>
+    <script src="/mtaliii-inline-country-select.js"></script>
 
     <!-- ================================================
      MTALIII AFRICA
@@ -892,8 +886,8 @@
      Connects existing trip buttons to booking popup
 ================================================ -->
 
-    <script src="journey-integration.js"></script>
-    <script src="accommodation-itinerary.js"></script>
+    <script src="/js/tours/journey-integration.js"></script>
+    <script src="/js/stays/accommodation-itinerary.js"></script>
 
 
 
@@ -902,15 +896,86 @@
 
 
     <!-- New shared planner -->
-    <script src="journey-planner.js"></script>
+    <script src="/js/tours/journey-planner.js"></script>
 
     <!-- Existing navigation integration -->
-    <script src="/featured-tour-partners.js"></script>
-    <script src="/trip-partner-selector.js"></script>
-    <script src="/register-agency-open.js"></script>
+    <script src="/js/agencies/featured-tour-partners.js"></script>
+    <script src="/js/agencies/trip-partner-selector.js"></script>
+    <script src="/js/agencies/register-agency-open.js"></script>
 
-    <script src="/agency-registration-feedback.js"></script>
-    <script src="/landing-page-control.js"></script>
+    <script src="/js/agencies/agency-registration-feedback.js"></script>
+    <script src="/js/core/landing-page-control.js"></script>
+
+<script defer src="/js/core/mtaliii-navigation.js?v=4"></script>
+<script defer src="/js/core/mtaliii-auto-year.js"></script>
+
+
+<a
+    class="mtaliii-whatsapp-floating"
+    href="https://wa.me/254715767638?text=Hello%20Mtaliii%20Africa!%20I%20would%20like%20help%20planning%20my%20African%20trip."
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Chat with Mtaliii Africa on WhatsApp"
+    title="Chat on WhatsApp"
+    style="
+        
+        
+        
+        
+        width:54px !important;
+        height:54px !important;
+        min-width:54px !important;
+        min-height:54px !important;
+        padding:0 !important;
+        margin:0 !important;
+        border-radius:50% !important;
+        background:#25D366 !important;
+        color:white !important;
+        display:flex !important;
+        align-items:center !important;
+        justify-content:center !important;
+        z-index:2147483000 !important;
+        box-shadow:0 4px 14px rgba(0,0,0,.25) !important;
+        text-decoration:none !important;
+    
+            position:fixed !important;
+            right:8px !important;
+            left:auto !important;
+            bottom:96px !important;
+            top:auto !important;
+        "
+>
+    <svg
+        width="29"
+        height="29"
+        viewBox="0 0 32 32"
+        fill="white"
+        aria-hidden="true"
+    >
+        <path d="M16 2 A14 14 0 1 0 16 30 A14 14 0 1 0 16 2 Z M9 10 L23 22 M23 10 L9 22" />
+    </svg>
+</a>
+
+
+<!-- MTALIII_SMART_OFFERS_V1 -->
+<link rel="stylesheet" href="/css/offers/mtaliii-special-offers.css">
+<script defer src="/js/offers/mtaliii-special-offers.js"></script>
+
+<script src="/js/photos/uganda-photo-fix.js?v=20261026"></script>
+
+
+
+
+<script src="/js/photos/drc-photo-layer.js?v=20261027-final"></script>
+
+<script src="/js/photos/tanzania-photo-layer.js?v=20261027-complete"></script>
+<script src="/js/photos/uganda-photo-layer.js?v=20261027-complete"></script>
+<script src="/js/photos/uganda-two-photo-fix.js?v=20261027-final"></script>
+<script src="/js/photos/rwanda-photo-layer.js?v=20261027-repair"></script>
+<script src="/js/photos/rwanda-two-missing.js?v=20261027"></script>
+<script src="/js/photos/rwanda-kings-palace-fix.js?v=20261027-fixed"></script>
+<script src="/js/photos/burundi-missing-photo-layer.js?v=20261027-repair2"></script>
+  <script src="/js/photos/somalia-photo-layer.js" defer></script>
 </body>
 
 </html>

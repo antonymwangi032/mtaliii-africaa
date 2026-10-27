@@ -1,0 +1,23 @@
+footer .mtaliii-one-line {
+    grid-column: 1 / -1 !important;
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 14px 0 0 !important;
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+    white-space: nowrap !important;
+    text-align: left !important;
+}
+
+footer .mtaliii-one-line strong {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+@media (max-width: 700px) {
+    footer .mtaliii-one-line {
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+}

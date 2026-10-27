@@ -135,10 +135,6 @@
         ) {
             setTimeout(handleLocation, 100);
         }
-
-        console.log(
-            "Mtaliii Africa: Tour partners and agency navigation ready."
-        );
     }
 
     if (document.readyState === "loading") {

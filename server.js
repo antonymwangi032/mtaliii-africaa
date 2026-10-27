@@ -7,10 +7,11 @@ const express = require("express");
 const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
+const database = require("./lib/database");
 
 const app = express();
 const root = __dirname;
-const dbFile = path.join(root, "data", "store.json");
+
 
 app.disable("x-powered-by");
 app.set("trust proxy", false);
@@ -37,20 +38,7 @@ app.use((req, res, next) => {
     next();
 });
 
-// DATABASE HELPERS
 
-const read = () =>
-    JSON.parse(fs.readFileSync(dbFile, "utf8"));
-
-const write = data => {
-    const temp = dbFile + ".tmp";
-    fs.writeFileSync(
-        temp,
-        JSON.stringify(data, null, 2),
-        { mode: 0o600 }
-    );
-    fs.renameSync(temp, dbFile);
-};
 
 const uid = () => crypto.randomUUID();
 
@@ -79,6 +67,20 @@ const equal = (a, b) => {
 // RATE LIMITING
 
 const sessions = new Map();
+
+/* MTALIII_SESSION_CLEANUP_V1 */
+const sessionCleanupTimer = setInterval(() => {
+    const now = Date.now();
+
+    for (const [token, session] of sessions) {
+        if (session.until <= now) {
+            sessions.delete(token);
+        }
+    }
+}, 15 * 60 * 1000);
+
+sessionCleanupTimer.unref();
+
 const attempts = new Map();
 
 function limit(req, res, next) {
@@ -154,49 +156,97 @@ function safeAgent(agentRecord) {
     return publicAgent;
 }
 
-// PUBLIC AGENCY ROUTES
+// PUBLIC AGENCY ROUTES — POSTGRESQL
 
-app.get("/api/agents", (req, res) => {
-    res.json(
-        read().agents
-            .filter(a => a.status === "approved" && !a.demo)
-            .map(safeAgent)
-    );
+app.get("/api/agents", async (req, res) => {
+    try {
+        const result = await database.query(
+            `SELECT * FROM "Agency"
+              WHERE "status" = $1 AND "demo" = false
+              ORDER BY "company" ASC`,
+            ["approved"]
+        );
+
+        res.json(result.rows.map(safeAgent));
+    } catch (error) {
+        console.error("Agency listing failed:", error.message);
+        res.status(500).json({
+            error: "Unable to load agencies."
+        });
+    }
 });
 
-app.get("/api/demo-agents", (req, res) => {
-    res.json(
-        read().agents
-            .filter(a => a.demo)
-            .map(safeAgent)
-    );
+app.get("/api/demo-agents", async (req, res) => {
+    try {
+        const result = await database.query(
+            `SELECT * FROM "Agency"
+              WHERE "demo" = true
+              ORDER BY "company" ASC`
+        );
+
+        res.json(result.rows.map(safeAgent));
+    } catch (error) {
+        console.error("Demo agency listing failed:", error.message);
+        res.status(500).json({
+            error: "Unable to load demonstration agencies."
+        });
+    }
 });
 
-app.get("/api/offers", (req, res) => {
-    const data = read();
+app.get("/api/offers", async (req, res) => {
+    try {
+        const result = await database.query(
+            `SELECT
+                o."id",
+                o."agentId",
+                o."title",
+                o."description",
+                o."price",
+                o."duration",
+                o."destinations",
+                o."status",
+                o."createdAt",
+                o."owner",
+                o."people",
+                o."validFrom",
+                o."validUntil",
+                o."imageUrl",
+                COALESCE(a."company", 'Mtaliii Africa') AS "company"
+              FROM "Offer" o
+              LEFT JOIN "Agency" a
+                  ON a."id" = o."agentId"
+              WHERE o."status" = $1
+                AND (
+                  o."owner" = 'mtaliii'
+                  OR (
+                    a."status" = $1
+                    AND a."demo" = false
+                  )
+                )
+                AND (
+                  o."validFrom" IS NULL
+                  OR o."validFrom" <= CURRENT_DATE
+                )
+                AND (
+                  o."validUntil" IS NULL
+                  OR o."validUntil" >= CURRENT_DATE
+                )
+              ORDER BY o."createdAt" DESC`,
+            ["approved"]
+        );
 
-    const offers = data.offers
-        .filter(offer =>
-            offer.status === "approved" &&
-            data.agents.some(a =>
-                a.id === offer.agentId &&
-                a.status === "approved" &&
-                !a.demo
-            )
-        )
-        .map(offer => ({
-            ...offer,
-            company: data.agents.find(
-                a => a.id === offer.agentId
-            )?.company
-        }));
-
-    res.json(offers);
+        res.json(result.rows);
+    } catch (error) {
+        console.error("Offer listing failed:", error.message);
+        res.status(500).json({
+            error: "Unable to load offers."
+        });
+    }
 });
 
 // AGENCY REGISTRATION
 
-app.post("/api/register", (req, res) => {
+app.post("/api/register", async (req, res) => {
     const {
         name,
         email,
@@ -219,42 +269,98 @@ app.post("/api/register", (req, res) => {
         });
     }
 
-    const data = read();
+    const normalizedEmail = email.trim().toLowerCase();
 
-    if (data.agents.some(
-        a => a.email === email.toLowerCase()
-    )) {
-        return res.status(409).json({
-            error: "Email already registered."
+    try {
+        const salt = crypto.randomBytes(16).toString("hex");
+        const passwordHash = passHash(password, salt);
+
+        await database.query(
+            `INSERT INTO "Agency" (
+                "id", "name", "company", "email",
+                "phone", "license", "salt", "passwordHash",
+                "status", "demo", "createdAt", "updatedAt"
+            )
+            VALUES (
+                $1, $2, $3, $4,
+                $5, $6, $7, $8,
+                $9, $10, NOW(), NOW()
+            )`,
+            [
+                uid(),
+                clean(name, 120),
+                clean(company, 150),
+                normalizedEmail,
+                clean(phone, 40),
+                clean(license, 100),
+                salt,
+                passwordHash,
+                "pending",
+                false
+            ]
+        );
+
+        return res.status(201).json({
+            message: "Agency application received. Approval requires manual licence and identity checks."
+        });
+    } catch (error) {
+        if (error.code === "23505") {
+            return res.status(409).json({
+                error: "Email already registered."
+            });
+        }
+
+        console.error("Agency registration failed:", error.message);
+
+        return res.status(500).json({
+            error: "Unable to complete registration."
         });
     }
-
-    const salt = crypto.randomBytes(16).toString("hex");
-
-    data.agents.push({
-        id: uid(),
-        name: clean(name, 120),
-        company: clean(company, 150),
-        email: email.toLowerCase(),
-        phone: clean(phone, 40),
-        license: clean(license, 100),
-        salt,
-        passwordHash: passHash(password, salt),
-        status: "pending",
-        demo: false,
-        createdAt: new Date().toISOString()
-    });
-
-    write(data);
-
-    res.status(201).json({
-        message: "Agency application received. Approval requires manual licence and identity checks."
-    });
 });
 
 // LOGIN AND LOGOUT
 
-app.post("/api/login", (req, res) => {
+
+/* MTALIII_LOGIN_RATE_LIMIT_V1 */
+const loginAttempts = new Map();
+
+function loginLimit(req, res, next) {
+    const now = Date.now();
+    const key = req.ip;
+    const windowMs = 15 * 60 * 1000;
+    const maxAttempts = 10;
+
+    if (loginAttempts.size > 10000) {
+        for (const [ip, entry] of loginAttempts) {
+            if (now - entry.start >= windowMs) {
+                loginAttempts.delete(ip);
+            }
+        }
+    }
+
+    const entry = loginAttempts.get(key);
+
+    if (!entry || now - entry.start >= windowMs) {
+        loginAttempts.set(key, { count: 1, start: now });
+        return next();
+    }
+
+    if (entry.count >= maxAttempts) {
+        res.setHeader(
+            "Retry-After",
+            String(Math.ceil((windowMs - (now - entry.start)) / 1000))
+        );
+
+        return res.status(429).json({
+            error: "Too many sign-in attempts. Please try again later."
+        });
+    }
+
+    entry.count++;
+    next();
+}
+
+app.post("/api/login", loginLimit, async (req, res) => {
     const { email, password } = req.body || {};
 
     let role = "agent";
@@ -277,20 +383,35 @@ app.post("/api/login", (req, res) => {
         role = "admin";
         identity = "admin";
     } else {
-        const account = read().agents.find(
-            a => !a.demo &&
-                a.email === String(email || "").toLowerCase()
-        );
+        try {
+            const result = await database.query(
+                `SELECT "id", "salt", "passwordHash"
+                 FROM "Agency"
+                 WHERE "email" = $1 AND "demo" = false
+                 LIMIT 1`,
+                [String(email || "").toLowerCase()]
+            );
 
-        if (
-            account &&
-            typeof password === "string" &&
-            equal(
-                passHash(password, account.salt),
-                account.passwordHash
-            )
-        ) {
-            identity = account.id;
+            const account = result.rows[0];
+
+            if (
+                account &&
+                typeof password === "string" &&
+                account.salt &&
+                account.passwordHash &&
+                equal(
+                    passHash(password, account.salt),
+                    account.passwordHash
+                )
+            ) {
+                identity = account.id;
+            }
+        } catch (error) {
+            console.error("Agency login failed:", error.message);
+
+            return res.status(500).json({
+                error: "Unable to complete sign in."
+            });
         }
     }
 
@@ -368,7 +489,8 @@ function nightsBetween(start, end) {
 // ENQUIRY SUBMISSION
 // ============================================
 
-app.post("/api/inquiries", (req, res) => {
+
+app.post("/api/inquiries", async (req, res) => {
     try {
         const body = req.body || {};
 
@@ -453,19 +575,24 @@ app.post("/api/inquiries", (req, res) => {
             }
         }
 
-        const data = read();
+        const agentId = body.agentId || null;
 
-        if (
-            body.agentId &&
-            !data.agents.some(a =>
-                a.id === body.agentId &&
-                a.status === "approved" &&
-                !a.demo
-            )
-        ) {
-            return res.status(400).json({
-                error: "Selected agency is not approved."
-            });
+        if (agentId) {
+            const agencyResult = await database.query(
+                `SELECT "id"
+                 FROM "Agency"
+                 WHERE "id" = $1
+                   AND "status" = 'approved'
+                   AND "demo" = false
+                 LIMIT 1`,
+                [agentId]
+            );
+
+            if (!agencyResult.rows.length) {
+                return res.status(400).json({
+                    error: "Selected agency is not approved."
+                });
+            }
         }
 
         const record = {
@@ -473,34 +600,62 @@ app.post("/api/inquiries", (req, res) => {
             enquiryType: isAccommodation
                 ? "accommodation"
                 : "trip",
-
             name,
             email,
             phone,
-
             country: clean(body.country, 80),
-
             date,
             checkout: isAccommodation ? checkout : null,
             days,
             guests,
-
             adults,
             children,
             rooms,
             accommodationType,
-
             destinations,
-            agentId: body.agentId || null,
-
+            agentId,
             notes: clean(body.notes, 2000),
-
-            status: "new",
-            createdAt: new Date().toISOString()
+            status: "new"
         };
 
-        data.inquiries.push(record);
-        write(data);
+        await database.query(
+            `INSERT INTO "Inquiry" (
+                "id", "enquiryType", "name", "email",
+                "phone", "country", "date", "checkout",
+                "days", "guests", "adults", "children",
+                "rooms", "accommodationType",
+                "destinations", "agentId", "notes",
+                "status", "createdAt"
+             )
+             VALUES (
+                $1, $2, $3, $4,
+                $5, $6, $7, $8,
+                $9, $10, $11, $12,
+                $13, $14,
+                $15::jsonb, $16, $17,
+                $18, NOW()
+             )`,
+            [
+                record.id,
+                record.enquiryType,
+                record.name,
+                record.email,
+                record.phone,
+                record.country,
+                record.date,
+                record.checkout,
+                record.days,
+                record.guests,
+                record.adults,
+                record.children,
+                record.rooms,
+                record.accommodationType,
+                JSON.stringify(record.destinations),
+                record.agentId,
+                record.notes,
+                record.status
+            ]
+        );
 
         return res.status(201).json({
             success: true,
@@ -519,183 +674,415 @@ app.post("/api/inquiries", (req, res) => {
 
 // AGENCY OFFERS
 
-app.post("/api/offers", auth, agent, (req, res) => {
-    const data = read();
-    const account = data.agents.find(
-        a => a.id === req.identity.id
-    );
+app.post("/api/offers", auth, agent, async (req, res) => {
+    try {
+        const accountResult = await database.query(
+            `SELECT "id", "status"
+             FROM "Agency"
+             WHERE "id" = $1 AND "demo" = false
+             LIMIT 1`,
+            [req.identity.id]
+        );
 
-    if (!account || account.status !== "approved") {
-        return res.status(403).json({
-            error: "Agency approval required."
+        const account = accountResult.rows[0];
+
+        if (!account || account.status !== "approved") {
+            return res.status(403).json({
+                error: "Agency approval required."
+            });
+        }
+
+        const body = req.body || {};
+
+        const price =
+            body.price === undefined ||
+            body.price === null ||
+            String(body.price).trim() === ""
+                ? null
+                : Number(body.price);
+
+        if (
+            price !== null &&
+            (!Number.isFinite(price) || price < 0)
+        ) {
+            return res.status(400).json({
+                error: "Price must be a valid non-negative number."
+            });
+        }
+
+        if (
+            !clean(body.title) ||
+            !clean(body.description) ||
+            !clean(body.destinations)
+        ) {
+            return res.status(400).json({
+                error: "Title, description and destinations required."
+            });
+        }
+
+        await database.query(
+            `INSERT INTO "Offer" (
+                "id", "agentId", "title", "description",
+                "price", "duration", "destinations", "status", "createdAt"
+             )
+             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW())`,
+            [
+                uid(),
+                account.id,
+                clean(body.title, 120),
+                clean(body.description, 1200),
+                price,
+                clean(body.duration, 80),
+                clean(body.destinations, 350),
+                "pending"
+            ]
+        );
+
+        res.status(201).json({
+            message: "Offer submitted for administrator review."
+        });
+    } catch (error) {
+        console.error("Offer submission failed:", error.message);
+        res.status(500).json({
+            error: "Unable to submit offer."
         });
     }
-
-    const body = req.body || {};
-
-    if (
-        !clean(body.title) ||
-        !clean(body.description) ||
-        !clean(body.destinations)
-    ) {
-        return res.status(400).json({
-            error: "Title, description and destinations required."
-        });
-    }
-
-    data.offers.push({
-        id: uid(),
-        agentId: account.id,
-        title: clean(body.title, 120),
-        description: clean(body.description, 1200),
-        duration: clean(body.duration, 80),
-        destinations: clean(body.destinations, 350),
-        status: "pending",
-        createdAt: new Date().toISOString()
-    });
-
-    write(data);
-
-    res.status(201).json({
-        message: "Offer submitted for administrator review."
-    });
 });
 
 // AGENCY DASHBOARD
 
-app.get("/api/agency", auth, agent, (req, res) => {
-    const data = read();
-    const account = data.agents.find(
-        a => a.id === req.identity.id
-    );
+app.get("/api/agency", auth, agent, async (req, res) => {
+    try {
+        const accountResult = await database.query(
+            `SELECT "id", "company", "name", "email",
+                    "phone", "license", "description",
+                    "status", "demo", "createdAt", "updatedAt"
+             FROM "Agency"
+             WHERE "id" = $1 AND "demo" = false
+             LIMIT 1`,
+            [req.identity.id]
+        );
 
-    res.json({
-        agency: safeAgent(account),
-        offers: data.offers.filter(
-            offer => offer.agentId === account.id
-        ),
-        inquiries: data.inquiries.filter(
-            inquiry =>
-                inquiry.agentId === account.id &&
-                account.status === "approved"
-        )
-    });
+        const account = accountResult.rows[0];
+
+        if (!account) {
+            return res.status(404).json({
+                error: "Agency not found."
+            });
+        }
+
+        const [offersResult, inquiriesResult] = await Promise.all([
+            database.query(
+                `SELECT * FROM "Offer"
+                 WHERE "agentId" = $1
+                 ORDER BY "createdAt" DESC`,
+                [account.id]
+            ),
+            account.status === "approved"
+                ? database.query(
+                    `SELECT * FROM "Inquiry"
+                     WHERE "agentId" = $1
+                     ORDER BY "createdAt" DESC`,
+                    [account.id]
+                )
+                : Promise.resolve({ rows: [] })
+        ]);
+
+        res.json({
+            agency: safeAgent(account),
+            offers: offersResult.rows,
+            inquiries: inquiriesResult.rows
+        });
+    } catch (error) {
+        console.error("Agency dashboard failed:", error.message);
+        res.status(500).json({
+            error: "Unable to load agency dashboard."
+        });
+    }
 });
 
-// ADMIN DASHBOARD
+app.get("/api/admin/overview", auth, admin, async (req, res) => {
+    try {
+        const [agencies, inquiries, offers] = await Promise.all([
+            database.query(
+                `SELECT "id", "company", "name", "email",
+                        "phone", "license", "description",
+                        "status", "demo", "userId",
+                        "createdAt", "updatedAt"
+                 FROM "Agency"
+                 WHERE "demo" = false
+                 ORDER BY "createdAt" DESC`
+            ),
+            database.query(
+                `SELECT * FROM "Inquiry"
+                 ORDER BY "createdAt" DESC`
+            ),
+            database.query(
+                `SELECT * FROM "Offer"
+                 ORDER BY "createdAt" DESC`
+            )
+        ]);
 
-app.get("/api/admin/overview", auth, admin, (req, res) => {
-    const data = read();
-
-    res.json({
-        agents: data.agents
-            .filter(a => !a.demo)
-            .map(({ passwordHash, salt, ...a }) => a),
-
-        inquiries: data.inquiries,
-        offers: data.offers
-    });
+        res.json({
+            agents: agencies.rows,
+            inquiries: inquiries.rows,
+            offers: offers.rows
+        });
+    } catch (error) {
+        console.error("Admin overview failed:", error.message);
+        res.status(500).json({
+            error: "Unable to load administrator dashboard."
+        });
+    }
 });
+
+
+/* MTALIII_ADMIN_AUDIT_LOG_V1 */
+const adminAuditDirectory = path.join(__dirname, "data", "security");
+const adminAuditFile = path.join(adminAuditDirectory, "admin-audit.jsonl");
+
+function recordAdminAction(req, action, recordId, status) {
+    const entry = {
+        timestamp: new Date().toISOString(),
+        actor: "admin",
+        action,
+        recordId: String(recordId),
+        status: String(status)
+    };
+
+    try {
+        fs.mkdirSync(adminAuditDirectory, { recursive: true });
+
+        fs.appendFileSync(
+            adminAuditFile,
+            JSON.stringify(entry) + "\n",
+            { encoding: "utf8", mode: 0o600 }
+        );
+    } catch (error) {
+        console.error("Administrator audit logging failed:", error.message);
+    }
+}
 
 // ADMIN — UPDATE AGENCY STATUS
 
-app.patch("/api/admin/agents/:id", auth, admin, (req, res) => {
+app.patch("/api/admin/agents/:id", auth, admin, async (req, res) => {
     const status = req.body?.status;
 
-    if (
-        !["approved", "rejected", "pending", "suspended"]
-            .includes(status)
-    ) {
-        return res.status(400).json({
-            error: "Invalid status."
-        });
+    if (!["approved", "rejected", "pending", "suspended"].includes(status)) {
+        return res.status(400).json({ error: "Invalid status." });
     }
 
-    const data = read();
+    try {
+        const result = await database.query(
+            `UPDATE "Agency"
+             SET "status" = $1, "updatedAt" = NOW()
+             WHERE "id" = $2 AND "demo" = false
+             RETURNING "id"`,
+            [status, req.params.id]
+        );
 
-    const account = data.agents.find(
-        a => a.id === req.params.id && !a.demo
+        if (!result.rowCount) {
+            return res.status(404).json({
+                error: "Agency not found."
+            });
+        }
+
+        recordAdminAction(req, "agency_status_updated", req.params.id, status);
+
+        res.json({ ok: true });
+    } catch (error) {
+        console.error("Agency approval failed:", error.message);
+        res.status(500).json({
+            error: "Unable to update agency."
+        });
+    }
+});
+
+
+/* MTALIII_ADMIN_CREATE_OFFER_V1 */
+app.post("/api/admin/offers", auth, admin, async (req, res) => {
+  try {
+    const b = req.body || {};
+    const title = String(b.title || "").trim();
+    const description = String(b.description || "").trim();
+    const destinations = String(b.destinations || "").trim();
+    const duration = String(b.duration || "").trim();
+    const owner = b.owner === "agency" ? "agency" : "mtaliii";
+    const status = String(b.status || "pending");
+    const price = Number(b.price);
+    const people = Number(b.people);
+    const imageUrl = String(b.imageUrl || "").trim();
+    const validFrom = b.validFrom || null;
+    const validUntil = b.validUntil || null;
+
+    if (!title || !description || !destinations || !duration) {
+      return res.status(400).json({
+        error: "Complete the title, description, destination and duration."
+      });
+    }
+
+    if (title.length > 120 || description.length > 1200 ||
+        destinations.length > 350 || duration.length > 80) {
+      return res.status(400).json({
+        error: "One or more text fields are too long."
+      });
+    }
+
+    if (!Number.isFinite(price) || price < 0 ||
+        !Number.isSafeInteger(people) || people < 1) {
+      return res.status(400).json({
+        error: "Enter a valid USD price and number of people."
+      });
+    }
+
+    if (!["pending", "approved", "rejected"].includes(status)) {
+      return res.status(400).json({ error: "Invalid offer status." });
+    }
+
+    const validDate = value =>
+      !value || (
+        /^\d{4}-\d{2}-\d{2}$/.test(value) &&
+        !Number.isNaN(Date.parse(value))
+      );
+
+    if (!validDate(validFrom) || !validDate(validUntil) ||
+        (validFrom && validUntil && validUntil < validFrom)) {
+      return res.status(400).json({
+        error: "Enter a valid offer date range."
+      });
+    }
+
+    if (imageUrl && (
+      imageUrl.length > 1500 ||
+      !/^https?:\/\//i.test(imageUrl)
+    )) {
+      return res.status(400).json({
+        error: "Use a valid HTTP or HTTPS image URL."
+      });
+    }
+
+    let agentId = null;
+
+    if (owner === "agency") {
+      agentId = String(b.agentId || "");
+
+      const agency = await database.query(
+        `SELECT "id" FROM "Agency"
+         WHERE "id" = $1 AND "status" = 'approved'
+         AND "demo" = false LIMIT 1`,
+        [agentId]
+      );
+
+      if (!agency.rowCount) {
+        return res.status(400).json({
+          error: "Select an approved agency."
+        });
+      }
+    }
+
+    const result = await database.query(
+      `INSERT INTO "Offer"
+       ("id", "agentId", "title", "description",
+        "price", "duration", "destinations", "status",
+        "owner", "people", "validFrom", "validUntil",
+        "imageUrl", "createdAt")
+       VALUES
+       (gen_random_uuid()::text, $1, $2, $3,
+        $4, $5, $6, $7, $8, $9,
+        $10::date, $11::date, $12, NOW())
+       RETURNING "id"`,
+      [
+        agentId, title, description, price, duration,
+        destinations, status, owner, people,
+        validFrom, validUntil, imageUrl || null
+      ]
     );
 
-    if (!account) {
-        return res.status(404).json({
-            error: "Agency not found."
-        });
-    }
-
-    account.status = status;
-    account.reviewedAt = new Date().toISOString();
-
-    write(data);
-    res.json({ ok: true });
+    res.status(201).json({
+      success: true,
+      id: result.rows[0].id,
+      message: "Tour offer created successfully."
+    });
+  } catch (error) {
+    console.error("Admin offer creation failed:", error.message);
+    res.status(500).json({
+      error: "Unable to create tour offer."
+    });
+  }
 });
 
 // ADMIN — UPDATE OFFER STATUS
 
-app.patch("/api/admin/offers/:id", auth, admin, (req, res) => {
+app.patch("/api/admin/offers/:id", auth, admin, async (req, res) => {
     const status = req.body?.status;
 
-    if (
-        !["approved", "rejected", "pending"].includes(status)
-    ) {
-        return res.status(400).json({
-            error: "Invalid status."
-        });
+    if (!["approved", "rejected", "pending"].includes(status)) {
+        return res.status(400).json({ error: "Invalid status." });
     }
 
-    const data = read();
+    try {
+        const result = await database.query(
+            `UPDATE "Offer"
+             SET "status" = $1
+             WHERE "id" = $2
+             RETURNING "id"`,
+            [status, req.params.id]
+        );
 
-    const offer = data.offers.find(
-        o => o.id === req.params.id
-    );
+        if (!result.rowCount) {
+            return res.status(404).json({
+                error: "Offer not found."
+            });
+        }
 
-    if (!offer) {
-        return res.status(404).json({
-            error: "Offer not found."
+        recordAdminAction(req, "offer_status_updated", req.params.id, status);
+
+        res.json({ ok: true });
+    } catch (error) {
+        console.error("Offer approval failed:", error.message);
+        res.status(500).json({
+            error: "Unable to update offer."
         });
     }
-
-    offer.status = status;
-    write(data);
-
-    res.json({ ok: true });
 });
 
 // ADMIN — UPDATE ENQUIRY STATUS
 
-app.patch("/api/admin/inquiries/:id", auth, admin, (req, res) => {
+app.patch("/api/admin/inquiries/:id", auth, admin, async (req, res) => {
     const status = req.body?.status;
 
-    if (
-        !["new", "contacted", "closed"].includes(status)
-    ) {
-        return res.status(400).json({
-            error: "Invalid status."
-        });
+    if (!["new", "contacted", "quotation_sent", "confirmed", "cancelled", "closed"].includes(status)) {
+        return res.status(400).json({ error: "Invalid status." });
     }
 
-    const data = read();
+    try {
+        const result = await database.query(
+            `UPDATE "Inquiry"
+             SET "status" = $1
+             WHERE "id" = $2
+             RETURNING "id"`,
+            [status, req.params.id]
+        );
 
-    const inquiry = data.inquiries.find(
-        i => i.id === req.params.id
-    );
+        if (!result.rowCount) {
+            return res.status(404).json({
+                error: "Enquiry not found."
+            });
+        }
 
-    if (!inquiry) {
-        return res.status(404).json({
-            error: "Enquiry not found."
+        recordAdminAction(req, "inquiry_status_updated", req.params.id, status);
+
+        res.json({ ok: true });
+    } catch (error) {
+        console.error("Inquiry update failed:", error.message);
+        res.status(500).json({
+            error: "Unable to update enquiry."
         });
     }
-
-    inquiry.status = status;
-    write(data);
-
-    res.json({ ok: true });
 });
 
-// ============================================
-// EXISTING PHOTO CACHING SYSTEM
-// ============================================
 
+// MTALIII_PHOTO_CACHE_INITIALIZATION_V1
 const photoIds = new Set([
     "photo-1546182990-dffeafbe841d",
     "photo-1564760055775-d63b17a55c44",
@@ -707,13 +1094,7 @@ const photoIds = new Set([
     "photo-1464822759023-fed622ff2c3b"
 ]);
 
-const imageDir = path.join(
-    root,
-    "public",
-    "assets",
-    "cached"
-);
-
+const imageDir = path.join(__dirname, "public", "images", "cache");
 fs.mkdirSync(imageDir, { recursive: true });
 
 const inflightPhotos = new Map();
@@ -848,82 +1229,50 @@ app.get("/api/discover", async (req, res) => {
         });
     }
 
-    const cached = osmCache.get(country);
 
-    if (
-        cached &&
-        Date.now() - cached.at < 86400000
-    ) {
-        return res.json(cached.data);
-    }
-
-    const query = `
-    [out:json][timeout:24];
-    area["name:en"="${allowed[country]}"]["admin_level"="2"]->.a;
-    (
-      nwr["tourism"~"attraction|museum|zoo|viewpoint|gallery|theme_park|artwork|picnic_site|information"](area.a);
-      nwr["natural"~"waterfall|peak|cave_entrance|beach|spring"](area.a);
-      nwr["leisure"="nature_reserve"](area.a);
+    // Local attraction records are the primary reliable source.
+    // Add country-specific JSON files under data/discovery/.
+    const discoveryFile = path.join(
+        __dirname,
+        "data",
+        "discovery",
+        country.toLowerCase().replace(/[^a-z0-9]+/g, "-") + ".json"
     );
-    out tags 650;
-  `;
 
-    try {
-        const response = await fetch(
-            "https://overpass.kumi.systems/api/interpreter",
-            {
-                method: "POST",
-                headers: {
-                    "content-type":
-                        "application/x-www-form-urlencoded"
-                },
-                body: new URLSearchParams({
-                    data: query
-                }),
-                signal: AbortSignal.timeout(28000)
-            }
-        );
+    if (fs.existsSync(discoveryFile)) {
+        try {
+            const records = JSON.parse(
+                fs.readFileSync(discoveryFile, "utf8")
+            );
 
-        if (!response.ok) {
-            throw new Error("Map provider unavailable.");
+            const places = [...new Set(
+                records
+                    .map(item =>
+                        typeof item === "string"
+                            ? item
+                            : item && item.name
+                    )
+                    .filter(name =>
+                        typeof name === "string" &&
+                        name.trim().length > 3
+                    )
+            )];
+
+            return res.json({
+                country,
+                places,
+                source: "Mtaliii curated attraction directory",
+                note: "Curated discovery suggestions; verify details before visiting."
+            });
+        } catch (error) {
+            console.error("Discovery dataset error:", error.message);
         }
-
-        const json = await response.json();
-
-        const names = [
-            ...new Set(
-                (json.elements || [])
-                    .map(x =>
-                        x.tags?.["name:en"] ||
-                        x.tags?.name
-                    )
-                    .filter(x =>
-                        x &&
-                        x.length > 3 &&
-                        x.length < 110
-                    )
-            )
-        ].slice(0, 500);
-
-        const result = {
-            country,
-            places: names,
-            source: "OpenStreetMap contributors",
-            note: "Community-mapped places; not independently verified or guaranteed complete."
-        };
-
-        osmCache.set(country, {
-            at: Date.now(),
-            data: result
-        });
-
-        res.json(result);
-
-    } catch {
-        res.status(503).json({
-            error: "Map discovery unavailable; try again later."
-        });
     }
+
+    return res.status(503).json({
+        error: "No local attraction directory is available for this country yet."
+    });
+
 });
 
 // START SERVER

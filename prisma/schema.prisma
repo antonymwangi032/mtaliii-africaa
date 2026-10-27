@@ -1,0 +1,141 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String   @id @default(uuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         String   @default("CUSTOMER")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  agency       Agency?
+  bookings     Booking[]
+  itineraries  Itinerary[]
+}
+
+model Agency {
+  id           String   @id @default(uuid())
+  company      String
+  name         String
+  email        String?  @unique
+  phone        String?
+  license      String?
+  description  String?
+  salt         String?
+  passwordHash String?
+  status       String   @default("pending")
+  demo         Boolean  @default(false)
+  userId       String?  @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User?    @relation(fields: [userId], references: [id])
+  offers       Offer[]
+  inquiries    Inquiry[]
+}
+
+model Destination {
+  id          String   @id @default(uuid())
+  name        String
+  country     String
+  description String?
+  imageUrl    String?
+  category    String?
+  createdAt   DateTime @default(now())
+
+  accommodations Accommodation[]
+}
+
+model Accommodation {
+  id            String   @id @default(uuid())
+  name          String
+  country       String
+  city          String?
+  description   String?
+  pricePerNight Float?
+  imageUrl      String?
+  destinationId String?
+  createdAt     DateTime @default(now())
+
+  destination Destination? @relation(fields: [destinationId], references: [id])
+}
+
+model Offer {
+  id           String   @id @default(uuid())
+  title        String
+  description  String?
+  price        Float?
+  duration     String?
+  destinations String?
+  status       String   @default("pending")
+  agentId      String?
+  owner        String   @default("agency")
+  people       Int?
+  validFrom    DateTime? @db.Date
+  validUntil   DateTime? @db.Date
+  imageUrl     String?
+  createdAt    DateTime @default(now())
+  agency       Agency?  @relation(fields: [agentId], references: [id])
+}
+
+model Inquiry {
+  id                String   @id @default(uuid())
+  name              String
+  email             String
+  phone             String?
+  country           String?
+  date              String?
+  checkout          String?
+  days              Int?
+  guests            Int?
+  adults            Int?
+  children          Int?
+  rooms             Int?
+  accommodationType String?
+  enquiryType       String?
+  destinations      Json?
+  notes             String?
+  status            String   @default("new")
+  agentId           String?
+  createdAt         DateTime @default(now())
+  agency            Agency?  @relation(fields: [agentId], references: [id])
+}
+
+model Booking {
+  id          String   @id @default(uuid())
+  userId      String
+  status      String   @default("PENDING")
+  totalAmount Float?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user        User     @relation(fields: [userId], references: [id])
+}
+
+model Itinerary {
+  id          String   @id @default(uuid())
+  userId      String
+  title       String
+  destinations Json?
+  startDate   DateTime?
+  endDate     DateTime?
+  createdAt   DateTime @default(now())
+
+  user        User     @relation(fields: [userId], references: [id])
+}
+
+model AuditLog {
+  id         String   @id @default(uuid())
+  actorId    String?
+  action     String
+  entity     String?
+  entityId   String?
+  createdAt  DateTime @default(now())
+}

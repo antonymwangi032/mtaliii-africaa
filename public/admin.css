@@ -1,0 +1,1038 @@
+/* ================================================
+   MTALIII AFRICA
+   PROFESSIONAL ADMINISTRATOR WORKSPACE
+   ================================================ */
+
+:root {
+    --admin-green: #143e32;
+    --admin-green-light: #eaf3ee;
+    --admin-gold: #e7a53e;
+    --admin-bg: #f5f7f5;
+    --admin-white: #ffffff;
+    --admin-border: #e2e9e4;
+    --admin-text: #19372d;
+    --admin-muted: #718078;
+    --admin-radius: 16px;
+}
+
+body:has(#dashboard) {
+    background: var(--admin-bg);
+}
+
+body:has(#dashboard) main.account {
+    width: min(1380px, 94%);
+    max-width: 1380px;
+    margin: 0 auto;
+    padding: 145px 0 90px;
+    min-height: 85vh;
+}
+
+/* Preserve the existing login page */
+
+#loginForm[hidden],
+#dashboard[hidden],
+body:has(#dashboard) .section-head[hidden] {
+    display: none !important;
+}
+
+#loginForm {
+    width: min(100%, 480px);
+    max-width: 480px;
+    margin: 20px auto 50px;
+}
+
+#dashboard {
+    width: 100%;
+    margin: 0;
+}
+
+#dashboard *,
+#dashboard *::before,
+#dashboard *::after {
+    box-sizing: border-box;
+}
+
+/* Main workspace */
+
+.admin-workspace {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    color: var(--admin-text);
+}
+
+.admin-workspace-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    padding: 0 2px;
+}
+
+.admin-eyebrow {
+    display: block;
+    margin-bottom: 12px;
+    color: #8a7750;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.admin-workspace-header h2 {
+    margin: 0;
+    color: var(--admin-green);
+    font-size: clamp(29px, 3vw, 43px);
+    line-height: 1.15;
+    letter-spacing: -1px;
+}
+
+.admin-workspace-header p {
+    margin: 12px 0 0;
+    color: var(--admin-muted);
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+#dashboard #logout {
+    flex-shrink: 0;
+    padding: 12px 22px;
+    background: var(--admin-white);
+    border: 1px solid var(--admin-border);
+    border-radius: 11px;
+    color: var(--admin-green);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+#dashboard #logout:hover {
+    background: var(--admin-green-light);
+    border-color: #a5c3b3;
+}
+
+/* Four summary cards */
+
+.admin-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 17px;
+}
+
+.admin-metric {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 160px;
+    padding: 24px;
+    background: var(--admin-white);
+    border: 1px solid var(--admin-border);
+    border-radius: var(--admin-radius);
+    box-shadow: 0 4px 18px rgba(18, 55, 39, 0.035);
+}
+
+.admin-metric-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    color: #64766b;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.admin-metric-icon {
+    display: grid;
+    place-items: center;
+    width: 35px;
+    height: 35px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: var(--admin-green-light);
+    color: var(--admin-green);
+    font-size: 19px;
+}
+
+.admin-metric > strong {
+    display: block;
+    margin: 13px 0 7px;
+    color: var(--admin-green);
+    font-size: 38px;
+    font-weight: 800;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+}
+
+.admin-metric > small {
+    color: var(--admin-muted);
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+/* Management section */
+
+.admin-management {
+    overflow: hidden;
+    padding: 28px;
+    background: var(--admin-white);
+    border: 1px solid var(--admin-border);
+    border-radius: 20px;
+    box-shadow: 0 5px 22px rgba(18, 55, 39, 0.025);
+}
+
+.admin-management-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.admin-management-heading h3 {
+    margin: 0 0 7px;
+    color: var(--admin-green);
+    font-size: 24px;
+    font-weight: 750;
+}
+
+.admin-management-heading p {
+    margin: 0;
+    color: var(--admin-muted);
+    font-size: 14px;
+}
+
+/* Management tabs */
+
+.admin-tabs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px;
+    margin-bottom: 22px;
+    background: #f2f5f2;
+    border-radius: 13px;
+    overflow-x: auto;
+}
+
+#dashboard .admin-tab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex: 1;
+    min-width: max-content;
+    padding: 13px 16px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    background: transparent;
+    color: #64766b;
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+#dashboard .admin-tab:hover {
+    background: #e7eee8;
+    color: var(--admin-green);
+}
+
+#dashboard .admin-tab.active {
+    background: var(--admin-green);
+    color: white;
+    box-shadow: 0 3px 10px rgba(20, 62, 50, 0.15);
+}
+
+.admin-tab span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 25px;
+    height: 24px;
+    padding: 0 7px;
+    border-radius: 7px;
+    background: rgba(20, 62, 50, 0.09);
+    font-size: 12px;
+}
+
+.admin-tab.active span {
+    background: rgba(255, 255, 255, 0.18);
+}
+
+/* Compact management records */
+
+.admin-record-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.admin-record {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 22px;
+    padding: 20px 22px;
+    background: #ffffff;
+    border: 1px solid var(--admin-border);
+    border-radius: 13px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.admin-record:hover {
+    border-color: #bed3c5;
+    box-shadow: 0 4px 15px rgba(18, 55, 39, 0.035);
+}
+
+.admin-record-main {
+    flex: 1;
+    min-width: 0;
+}
+
+.admin-record-title {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.admin-record-title h4 {
+    margin: 0;
+    color: var(--admin-green);
+    font-size: 17px;
+    font-weight: 750;
+}
+
+.admin-record-main > p {
+    margin: 7px 0;
+    color: #53665b;
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.admin-record-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px 18px;
+    margin: 8px 0;
+    color: #607267;
+    font-size: 13px;
+}
+
+.admin-record-meta span {
+    overflow-wrap: anywhere;
+}
+
+.admin-record-main .admin-record-small {
+    color: #718078;
+    font-size: 12px;
+    line-height: 1.65;
+}
+
+.admin-record-actions {
+    flex: 0 0 170px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+}
+
+#dashboard .admin-status-select {
+    width: 170px;
+    max-width: 100%;
+    padding: 11px 12px;
+    background: #f8faf8;
+    border: 1px solid #d4e0d7;
+    border-radius: 9px;
+    color: var(--admin-green);
+    font-size: 13px;
+    cursor: pointer;
+}
+
+#dashboard .admin-status-select:focus-visible,
+#dashboard .admin-tab:focus-visible,
+#dashboard #logout:focus-visible {
+    outline: 3px solid #b6d7c4;
+    outline-offset: 2px;
+}
+
+#dashboard .admin-status-select:disabled {
+    opacity: 0.55;
+    cursor: wait;
+}
+
+/* Status badges */
+
+.admin-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 750;
+    text-transform: capitalize;
+    white-space: nowrap;
+}
+
+.admin-status-approved,
+.admin-status-closed {
+    background: #e5f4e9;
+    color: #22673b;
+}
+
+.admin-status-pending,
+.admin-status-new {
+    background: #fff1d7;
+    color: #956019;
+}
+
+.admin-status-rejected,
+.admin-status-suspended {
+    background: #fce8e7;
+    color: #a52e2e;
+}
+
+.admin-status-contacted {
+    background: #e8f0fd;
+    color: #315d9b;
+}
+
+.admin-status-unknown {
+    background: #edf0ed;
+    color: #59675e;
+}
+
+/* Expandable travel enquiries */
+
+.admin-details {
+    margin-top: 13px;
+    border-top: 1px solid #e9eeea;
+    padding-top: 12px;
+}
+
+.admin-details summary {
+    width: fit-content;
+    color: var(--admin-green);
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.admin-details summary:hover {
+    text-decoration: underline;
+}
+
+.admin-details-content {
+    margin-top: 14px;
+    padding: 16px;
+    background: #f7f9f7;
+    border: 1px solid #e8eee9;
+    border-radius: 10px;
+}
+
+.admin-details-content p {
+    margin: 6px 0 12px;
+    color: #4d6255;
+    font-size: 13px;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+}
+
+.admin-notes {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+/* Feedback and empty states */
+
+#adminFeedback:empty {
+    display: none;
+}
+
+#adminFeedback:not(:empty) {
+    margin: 0 0 15px;
+    padding: 12px 15px;
+    border-radius: 9px;
+    background: #fff4f1;
+    color: #a52e2e;
+    font-size: 13px;
+}
+
+.admin-empty {
+    padding: 55px 20px;
+    border: 1px dashed #d5e0d7;
+    border-radius: 13px;
+    background: #fafcfb;
+    color: var(--admin-muted);
+    text-align: center;
+    font-size: 14px;
+}
+
+/* Tablet */
+
+@media (max-width: 1050px) {
+    .admin-metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* Mobile */
+
+@media (max-width: 700px) {
+    body:has(#dashboard) main.account {
+        width: 92%;
+        padding-top: 115px;
+        padding-bottom: 55px;
+    }
+
+    .admin-workspace {
+        gap: 22px;
+    }
+
+    .admin-workspace-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 17px;
+    }
+
+    .admin-workspace-header h2 {
+        font-size: 29px;
+    }
+
+    #dashboard #logout {
+        padding: 10px 18px;
+    }
+
+    .admin-metrics {
+        gap: 10px;
+    }
+
+    .admin-metric {
+        min-height: 138px;
+        padding: 16px;
+    }
+
+    .admin-metric > strong {
+        font-size: 32px;
+    }
+
+    .admin-metric-top {
+        font-size: 11px;
+    }
+
+    .admin-metric-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 15px;
+    }
+
+    .admin-management {
+        padding: 16px;
+        border-radius: 15px;
+    }
+
+    .admin-management-heading h3 {
+        font-size: 21px;
+    }
+
+    .admin-tabs {
+        justify-content: flex-start;
+    }
+
+    #dashboard .admin-tab {
+        flex: 0 0 auto;
+        padding: 11px 12px;
+        font-size: 12px;
+    }
+
+    .admin-record {
+        flex-direction: column;
+        gap: 15px;
+        padding: 17px;
+    }
+
+    .admin-record-actions {
+        flex: none;
+        width: 100%;
+        justify-content: stretch;
+    }
+
+    #dashboard .admin-status-select {
+        width: 100%;
+    }
+}
+
+@media (max-width: 390px) {
+    .admin-metrics {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-metric {
+        min-height: 120px;
+    }
+}
+
+/* ============================================
+   MTALIII ADMIN — FINAL LAYOUT REFINEMENTS
+   ============================================ */
+
+/* Remove the oversized empty space */
+body:has(#dashboard) main.account {
+    padding-top: 28px !important;
+    padding-bottom: 60px !important;
+    min-height: auto !important;
+}
+
+/* Keep the navigation visible without overlap */
+body:has(#dashboard) > header.nav {
+    position: relative !important;
+    top: auto !important;
+    margin-bottom: 0 !important;
+}
+
+/* Remove inherited section spacing */
+body:has(#dashboard) main.account.section {
+    margin-top: 0 !important;
+}
+
+#dashboard {
+    margin-top: 0 !important;
+}
+
+.admin-workspace {
+    gap: 24px;
+}
+
+/* Branded dashboard heading */
+.admin-workspace-header {
+    background: linear-gradient(
+        120deg,
+        #103d30 0%,
+        #17604a 70%,
+        #237357 100%
+    );
+    border-radius: 18px;
+    padding: 28px 32px;
+    color: white;
+}
+
+.admin-workspace-header h2 {
+    color: #ffffff !important;
+    font-size: clamp(28px, 3vw, 40px);
+}
+
+.admin-workspace-header p {
+    color: #e2efe8 !important;
+}
+
+.admin-eyebrow {
+    color: #f3c26b !important;
+}
+
+#dashboard #logout {
+    background: #ffffff;
+    border-color: #ffffff;
+    color: #124633;
+}
+
+/* Dashboard metric cards */
+.admin-metric {
+    min-height: 135px;
+    padding: 20px;
+    border-top: 3px solid #d8a24c;
+}
+
+.admin-metric:nth-child(2) {
+    border-top-color: #328b6a;
+}
+
+.admin-metric:nth-child(3) {
+    border-top-color: #5477ad;
+}
+
+.admin-metric:nth-child(4) {
+    border-top-color: #238753;
+}
+
+.admin-metric > strong {
+    font-size: 35px;
+    margin: 10px 0 5px;
+}
+
+.admin-metric-icon {
+    background: #e4f1e8;
+    color: #14523b;
+}
+
+/* Compact management section */
+.admin-management {
+    padding: 24px;
+}
+
+.admin-record {
+    padding: 17px 20px;
+}
+
+.admin-record-main > p {
+    margin: 5px 0;
+}
+
+.admin-record-title {
+    margin-bottom: 7px;
+}
+
+/* Better expanded itinerary formatting */
+.admin-details-content {
+    background: #f5f9f6;
+    border-left: 3px solid #237357;
+    padding: 18px 20px;
+}
+
+.admin-notes {
+    white-space: pre-wrap;
+    line-height: 1.9 !important;
+    font-family: inherit;
+    font-size: 13px;
+    color: #344f41;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+    body:has(#dashboard) main.account {
+        padding-top: 18px !important;
+    }
+
+    .admin-workspace-header {
+        padding: 23px 20px;
+    }
+
+    .admin-metric {
+        min-height: 125px;
+        padding: 15px;
+    }
+
+    .admin-management {
+        padding: 15px;
+    }
+}
+
+
+/* MTALIII ADMIN — COMPACT BRAND AND ITINERARY */
+
+.admin-brand {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.admin-brand-mark {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 210px;
+    padding: 14px 18px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.22);
+}
+
+.admin-brand-mark strong {
+    color: #ffffff;
+    font-size: 23px;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+}
+
+.admin-brand-mark strong span {
+    color: #ffc46b;
+}
+
+.admin-brand-mark small {
+    margin-top: 7px;
+    color: #e9f2eb;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.admin-itinerary {
+    display: grid;
+    gap: 14px;
+    margin-top: 12px;
+}
+
+.admin-itinerary-section {
+    padding: 18px;
+    background: #ffffff;
+    border: 1px solid #dce8df;
+    border-radius: 12px;
+}
+
+.admin-itinerary-section h5 {
+    margin: 0 0 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e8eee9;
+    color: #14543d;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.admin-itinerary-items {
+    display: grid;
+    gap: 8px;
+}
+
+.admin-itinerary-item {
+    padding: 10px 13px;
+    border-radius: 8px;
+    background: #f4f8f5;
+    color: #385246;
+    font-size: 13px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+.admin-details-content {
+    padding: 16px;
+    background: #f1f7f3;
+    border: 1px solid #dce9df;
+    border-radius: 12px;
+}
+
+.admin-details summary {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 13px;
+    border: 1px solid #c9dfd0;
+    border-radius: 9px;
+    background: #e9f3ed;
+    color: #164d38;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+@media (max-width: 800px) {
+    .admin-brand {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .admin-brand-mark {
+        min-width: 0;
+        width: 100%;
+    }
+
+    .admin-itinerary-section {
+        padding: 13px;
+    }
+}
+
+/* MTALIII ADMIN — BACK TO TOP BUTTON POSITION */
+body:has(#dashboard) .back-to-top,
+body:has(#dashboard) #backToTop,
+body:has(#dashboard) .scroll-to-top,
+body:has(#dashboard) #scrollToTop {
+    position: fixed !important;
+    left: auto !important;
+    right: 24px !important;
+    bottom: 24px !important;
+    z-index: 999 !important;
+}
+
+@media (max-width: 700px) {
+    body:has(#dashboard) .back-to-top,
+    body:has(#dashboard) #backToTop,
+    body:has(#dashboard) .scroll-to-top,
+    body:has(#dashboard) #scrollToTop {
+        right: 16px !important;
+        bottom: 16px !important;
+    }
+}
+
+/* Move existing Back to Top button to opposite corner */
+body .back-to-top,
+body .back-to-top-btn,
+body #backToTop,
+body .scroll-to-top,
+body #scrollToTop {
+    left: auto !important;
+    right: 20px !important;
+    bottom: 20px !important;
+    position: fixed !important;
+}
+body:has(#dashboard) button[aria-label="Back to top"] { position: fixed !important; left: auto !important; right: 24px !important; bottom: 24px !important; }
+
+
+/* MTALIII AFRICA — ADMIN NAVIGATION */
+
+body:has(#dashboard) > header.nav {
+    position: relative !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 104px;
+    padding: 18px 5%;
+    background: #ffffff;
+    border-bottom: 3px solid #e7aa43;
+    box-shadow: 0 4px 20px rgba(17, 57, 42, .06);
+}
+
+.admin-nav-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none !important;
+}
+
+.admin-nav-animal {
+    display: grid;
+    place-items: center;
+    width: 60px;
+    height: 60px;
+    flex-shrink: 0;
+    border-radius: 16px;
+    background: #e8f3eb;
+    font-size: 36px;
+}
+
+.admin-nav-name {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.admin-nav-name strong {
+    color: #103e2e;
+    font-size: 29px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1.1;
+}
+
+.admin-nav-name em {
+    color: #c8872c;
+    font-style: normal;
+}
+
+.admin-nav-name small {
+    color: #617569;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .2px;
+}
+
+body:has(#dashboard) > header.nav > a:last-child {
+    color: #164b37;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+body:has(#dashboard) > header.nav > a:last-child:hover {
+    color: #bd812c;
+}
+
+@media (max-width: 650px) {
+    body:has(#dashboard) > header.nav {
+        min-height: 85px;
+        padding: 14px 4%;
+    }
+
+    .admin-nav-animal {
+        width: 45px;
+        height: 45px;
+        font-size: 28px;
+    }
+
+    .admin-nav-name strong {
+        font-size: 21px;
+    }
+
+    .admin-nav-name small {
+        font-size: 9px;
+    }
+}
+
+
+/* MTALIII AFRICA — EXTENDED ENQUIRY STATUSES */
+
+.admin-status-quotation_sent {
+    background: #e9e7fb;
+    color: #6550a8;
+}
+
+.admin-status-confirmed {
+    background: #dff4e6;
+    color: #176b3b;
+}
+
+.admin-status-cancelled {
+    background: #fde9e9;
+    color: #a83232;
+}
+
+#dashboard .admin-record:has(.admin-status-confirmed) {
+    border-left-color: #16824a;
+}
+
+#dashboard .admin-record:has(.admin-status-quotation_sent) {
+    border-left-color: #7866bb;
+}
+
+#dashboard .admin-record:has(.admin-status-cancelled) {
+    border-left-color: #c75b52;
+}
+
+/* MTALIII ADMIN TOUR OFFER CREATOR */
+.mt-offer-panel {
+  margin: 22px 0;
+  padding: 24px;
+  border: 1px solid #dbe8dd;
+  border-radius: 16px;
+  background: #fff;
+}
+.mt-offer-panel h3 { color: #174c35; margin-bottom: 6px; }
+.mt-offer-panel p { color: #52645a; }
+.mt-offer-form { display: grid; gap: 16px; margin-top: 18px; }
+.mt-offer-form label {
+  display: grid;
+  gap: 7px;
+  font-weight: 600;
+  color: #214734;
+}
+.mt-offer-form input,
+.mt-offer-form textarea,
+.mt-offer-form select {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd9ce;
+  border-radius: 9px;
+  background: white;
+  color: #172a1e;
+  font: inherit;
+}
+.mt-offer-form textarea { min-height: 105px; }
+.mt-offer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 16px;
+}
+.mt-offer-save {
+  border: 0;
+  border-radius: 10px;
+  padding: 14px 22px;
+  background: #17633f;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+.mt-offer-save:disabled { opacity: .55; cursor: wait; }
+#mtOfferFeedback { min-height: 20px; }
+@media(max-width:650px) {
+  .mt-offer-panel { padding: 16px; }
+  .mt-offer-grid { grid-template-columns: 1fr; }
+}

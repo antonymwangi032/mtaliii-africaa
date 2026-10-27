@@ -1,0 +1,71 @@
+#mtaliiiTopButton {
+    position: fixed !important;
+    left: 24px !important;
+    right: auto !important;
+    bottom: 24px !important;
+    top: auto !important;
+    z-index: 99999 !important;
+    width: 52px !important;
+    height: 52px !important;
+    min-width: 52px !important;
+    min-height: 52px !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: none !important;
+    border-radius: 50% !important;
+    background: #16734e !important;
+    color: white !important;
+    box-shadow: 0 6px 20px rgba(0,0,0,.25) !important;
+    cursor: pointer !important;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .2s, transform .2s;
+}
+
+#mtaliiiTopButton.mtaliii-visible {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+}
+
+#mtaliiiTopButton svg {
+    display: block !important;
+    width: 25px !important;
+    height: 25px !important;
+    stroke: white !important;
+    fill: none !important;
+}
+
+#mtaliiiTopButton:hover {
+    background: #209565 !important;
+    transform: translateY(-3px);
+}
+
+@media (max-width: 600px) {
+    #mtaliiiTopButton {
+        left: 14px !important;
+        bottom: 18px !important;
+        width: 46px !important;
+        height: 46px !important;
+        min-width: 46px !important;
+        min-height: 46px !important;
+    }
+}
+
+/* MTALIII AFRICA — FOOTER CREDIT */
+
+.mtaliii-developer-credit {
+    margin: 6px 0 0;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.6;
+    color: #c9e4d5;
+}
+
+.mtaliii-developer-credit strong {
+    color: #ffffff;
+    font-weight: 600;
+}

@@ -1,0 +1,2655 @@
+/* =========================================
+   MTALIII AFRICA — GLOBAL STYLES
+========================================= */
+
+:root {
+    --ink: #183d35;
+    --forest: #123c34;
+    --mint: #e8f5ed;
+    --gold: #eeb958;
+    --sand: #fbf8f1;
+    --white: #fff;
+    --muted: #61736c;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: auto;
+}
+
+body {
+    margin: 0;
+    background: #fff;
+    color: var(--ink);
+    font: 15px/1.6 'DM Sans', sans-serif;
+}
+
+h1,
+h2,
+h3,
+.logo {
+    font-family: Outfit, sans-serif;
+    line-height: 1.07;
+}
+
+h2 {
+    font-size: clamp(37px, 5vw, 70px);
+    letter-spacing: -2px;
+    margin: 14px 0;
+}
+
+h2 i,
+h1 em {
+    font-family: Georgia, serif;
+    font-weight: 400;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+.nav {
+    height: 86px;
+    padding: 0 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    box-shadow: 0 1px 20px #1c33270b;
+}
+
+.logo {
+    font-size: 33px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    display: inline-flex;
+    align-items: baseline;
+}
+
+.logo span {
+    color: #f2b34c;
+}
+
+.logo small {
+    font: 700 8px 'DM Sans';
+    letter-spacing: 2px;
+    display: block;
+    margin-left: 8px;
+}
+
+.nav nav,
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.nav nav a,
+.navlink {
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.pill,
+.cta,
+.submit {
+    border: 0;
+    border-radius: 50px;
+    background: var(--gold);
+    color: #18382e;
+    padding: 14px 23px;
+    font-weight: 800;
+    display: inline-flex;
+    justify-content: space-between;
+    gap: 28px;
+}
+
+.pill {
+    background: var(--forest);
+    color: white;
+}
+
+/* =========================================
+   HERO SECTION
+========================================= */
+
+.hero {
+    height: min(780px, 88vh);
+    min-height: 580px;
+    position: relative;
+    background: #1e483d;
+    color: white;
+    overflow: hidden;
+}
+
+.hero-bg,
+.hero-shade {
+    position: absolute;
+    inset: 0;
+}
+
+.hero-bg {
+    background-size: cover;
+    background-position: center;
+    transition: opacity 0.8s;
+}
+
+.hero-shade {
+    background: linear-gradient(90deg,
+            #08251fe0 0%,
+            #173e3588 47%,
+            #163f2922 100%);
+}
+
+.hero-inner {
+    position: relative;
+    padding: 12vh 9% 90px;
+    max-width: 1050px;
+}
+
+.eyebrow {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: #9b7b3a;
+}
+
+.eyebrow.light {
+    color: #ffda8d;
+}
+
+.hero h1 {
+    font-size: clamp(76px, 11vw, 150px);
+    letter-spacing: -6px;
+    margin: 24px 0 18px;
+}
+
+.hero h1 em {
+    color: #f3c77d;
+}
+
+.hero p {
+    font-size: 18px;
+    max-width: 500px;
+    color: #f3f5ed;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+    margin-top: 28px;
+}
+
+.ghost {
+    font-weight: 700;
+}
+
+.hero-counter {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 50px;
+    font-weight: 700;
+}
+
+.hero-line {
+    width: 65px;
+    height: 2px;
+    background: #e4b768;
+}
+
+.hero-counter #heroCaption {
+    font-weight: 400;
+    margin-left: 20px;
+}
+
+.hero-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px 8%;
+    display: flex;
+    gap: 35px;
+    background: #12382fbf;
+    justify-content: space-between;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+/* =========================================
+   GENERAL SECTIONS
+========================================= */
+
+.section {
+    padding: 100px 7%;
+}
+
+.intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10%;
+    background: var(--sand);
+}
+
+.intro p {
+    font-size: 18px;
+    color: var(--muted);
+    max-width: 600px;
+}
+
+.stats {
+    display: flex;
+    gap: 35px;
+    margin-top: 40px;
+}
+
+.stats div {
+    display: flex;
+    flex-direction: column;
+    max-width: 150px;
+}
+
+.stats strong {
+    font: 800 32px Outfit;
+}
+
+.stats span {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 50px;
+    margin-bottom: 35px;
+}
+
+.section-head p {
+    max-width: 400px;
+    color: var(--muted);
+}
+
+/* =========================================
+   BIG FIVE
+========================================= */
+
+.wildlife {
+    background: #eaf3eb;
+}
+
+.bigfive {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 13px;
+}
+
+.animal {
+    position: relative;
+    overflow: hidden;
+    min-height: 345px;
+    border-radius: 12px;
+    background: linear-gradient(140deg,
+            #34584c,
+            #8a956f);
+}
+
+.animal img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    object-fit: cover;
+}
+
+.animal::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(transparent 55%,
+            #091f19cc);
+}
+
+.animal span {
+    position: absolute;
+    z-index: 1;
+    bottom: 24px;
+    left: 18px;
+    color: white;
+    font: 700 24px Outfit;
+}
+
+/* =========================================
+   SEARCH AND FILTERS
+========================================= */
+
+.searchrow {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 13px;
+}
+
+.searchrow input,
+.searchrow select,
+.form input,
+.form select,
+.form textarea {
+    border: 1px solid #d8e3dc;
+    background: white;
+    border-radius: 12px;
+    padding: 15px 16px;
+    width: 100%;
+    outline-color: #d8ad60;
+    color: #183d35;
+}
+
+.directory-tools {
+    display: flex;
+    justify-content: space-between;
+    margin: 25px 0;
+    color: var(--muted);
+}
+
+.textbutton {
+    border: 0;
+    background: none;
+    color: var(--forest);
+    font-weight: 800;
+}
+
+/* =========================================
+   DESTINATION CARDS
+========================================= */
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.destination {
+    border: 1px solid #e4ebe5;
+    border-radius: 16px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 8px 30px #132d2008;
+    transition: transform 0.2s;
+}
+
+.destination:hover {
+    transform: translateY(-5px);
+}
+
+.photo {
+    height: 185px;
+    background: linear-gradient(140deg,
+            #d9e7d4,
+            #a6c5b3);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #3c6251;
+    text-align: center;
+    font-size: 13px;
+    padding: 18px;
+}
+
+.photo img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.photo .category-tag {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    background: #ffffffed;
+    color: var(--forest);
+    padding: 4px 10px;
+    border-radius: 30px;
+    font-size: 10px;
+    font-weight: 800;
+    max-width: 90%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.destination .body {
+    padding: 19px;
+}
+
+.destination h3 {
+    font-size: 20px;
+    margin: 0 0 8px;
+    line-height: 1.2;
+}
+
+.destination p {
+    font-size: 12px;
+    color: var(--muted);
+    margin: 0 0 16px;
+}
+
+.destination button {
+    border: 0;
+    background: #e6f3ea;
+    color: #1b5642;
+    border-radius: 40px;
+    padding: 9px 15px;
+    font-weight: 800;
+    font-size: 12px;
+}
+
+.loadmore {
+    display: block;
+    margin: 36px auto 0;
+    padding: 13px 28px;
+    background: var(--forest);
+    border: 0;
+    border-radius: 40px;
+    color: white;
+    font-weight: 800;
+}
+
+.note {
+    font-size: 12px;
+    color: #6b7870;
+    margin-top: 28px;
+}
+
+/* =========================================
+   ADVENTURE BANNER
+========================================= */
+
+.wide-banner {
+    padding: 100px 8%;
+    color: white;
+    min-height: 390px;
+    background:
+        linear-gradient(95deg,
+            #164c3be8,
+            #164c3b88),
+        url('https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1600&q=85') center / cover;
+}
+
+.wide-banner h2 {
+    font-size: clamp(42px, 6vw, 85px);
+}
+
+/* =========================================
+   ACCOMMODATION
+========================================= */
+
+.stays {
+    background: var(--sand);
+}
+
+.stays .searchrow {
+    grid-template-columns: 2fr 1fr;
+}
+
+.hotelgrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.hotel {
+    background: white;
+    border: 1px solid #e3e9df;
+    padding: 22px;
+    border-radius: 14px;
+}
+
+.hotel h3 {
+    font-size: 21px;
+    margin: 6px 0;
+}
+
+.hotel span {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+/* =========================================
+   TOUR AGENCIES
+========================================= */
+
+.agencygrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.agencycard {
+    border: 1px solid #dce7df;
+    padding: 22px;
+    border-radius: 15px;
+}
+
+.agencycard h3 {
+    margin: 8px 0;
+}
+
+.agencycard p {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.agencycard button {
+    border: 0;
+    border-radius: 30px;
+    background: #e8f3eb;
+    padding: 10px 16px;
+}
+
+.demo {
+    margin-top: 25px;
+    background: #f7f6f1;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.demo summary {
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.demo #demoAgents {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.demo #demoAgents div {
+    background: white;
+    padding: 9px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+}
+
+/* =========================================
+   TRIP PLANNING
+========================================= */
+
+.planning {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 9%;
+    background: #dff0e6;
+}
+
+.planning-copy p {
+    font-size: 18px;
+    color: #546d61;
+}
+
+.plan-bullets {
+    display: grid;
+    gap: 15px;
+    font-weight: 700;
+    margin-top: 30px;
+}
+
+.form {
+    background: white;
+    padding: 35px;
+    border-radius: 18px;
+    box-shadow: 0 12px 50px #1b423014;
+}
+
+.form h3 {
+    font-size: 29px;
+    margin: 0 0 25px;
+}
+
+.form label {
+    display: block;
+    font-size: 12px;
+    font-weight: 800;
+    margin-bottom: 14px;
+}
+
+.form label input,
+.form label textarea,
+.form label select {
+    display: block;
+    margin-top: 6px;
+    font-weight: 400;
+}
+
+.twocol {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 15px;
+}
+
+.submit {
+    width: 100%;
+    justify-content: center;
+}
+
+.form small {
+    display: block;
+    margin-top: 12px;
+    color: #687b70;
+}
+
+.form-message {
+    font-size: 13px;
+    font-weight: 700;
+    margin-top: 12px;
+}
+
+/* =========================================
+   AGENCY REGISTRATION
+========================================= */
+
+.account {
+    background: #faf9f5;
+}
+
+.portal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.account .form {
+    border: 1px solid #e0e8df;
+}
+
+.account #dashboard {
+    margin-top: 35px;
+    padding: 30px;
+    background: white;
+    border: 1px solid #dce5de;
+    border-radius: 16px;
+}
+
+.dash-row {
+    border-bottom: 1px solid #e5ebe5;
+    padding: 14px 0;
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.dash-row p {
+    margin: 3px 0;
+    font-size: 13px;
+}
+
+.dash-row button {
+    padding: 8px 11px;
+    border: 0;
+    background: #e4f0e7;
+    border-radius: 8px;
+    margin: 3px;
+}
+
+.dash-row select {
+    padding: 8px;
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+
+footer {
+    background: #12382f;
+    color: #f3f8f2;
+    padding: 65px 7% 25px;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 2fr;
+    gap: 35px;
+}
+
+footer a,
+footer p {
+    display: block;
+    color: #c2d6cc;
+    font-size: 13px;
+}
+
+footer strong {
+    display: block;
+    margin-bottom: 20px;
+}
+
+.copyright {
+    grid-column: 1 / -1;
+    border-top: 1px solid #ffffff30;
+    padding-top: 20px;
+    color: #aac6b8;
+    font-size: 12px;
+}
+
+/* =========================================
+   RESPONSIVE — TABLETS
+========================================= */
+
+@media (max-width: 1000px) {
+
+    .nav nav {
+        display: none;
+    }
+
+    .bigfive {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .planning {
+        gap: 30px;
+    }
+
+    .hotelgrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* =========================================
+   RESPONSIVE — MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+    .nav {
+        height: 70px;
+        padding: 0 4%;
+    }
+
+    .logo {
+        font-size: 25px;
+    }
+
+    .logo small,
+    .navlink {
+        display: none;
+    }
+
+    .pill {
+        font-size: 11px;
+        padding: 10px;
+    }
+
+    .hero {
+        min-height: 640px;
+    }
+
+    .hero-inner {
+        padding: 100px 7%;
+    }
+
+    .hero h1 {
+        font-size: 78px;
+    }
+
+    .hero-bottom {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .section {
+        padding: 65px 5%;
+    }
+
+    .intro,
+    .planning,
+    .portal-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section-head {
+        display: block;
+    }
+
+    .stats {
+        gap: 15px;
+    }
+
+    .bigfive {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .animal {
+        min-height: 230px;
+    }
+
+    .cards,
+    .hotelgrid,
+    .agencygrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .searchrow {
+        grid-template-columns: 1fr;
+    }
+
+    .twocol {
+        grid-template-columns: 1fr;
+    }
+
+    footer {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .hero-counter #heroCaption {
+        font-size: 12px;
+    }
+
+    .form {
+        padding: 22px;
+    }
+}
+
+/* =========================================
+   RESPONSIVE — SMALL PHONES
+========================================= */
+
+@media (max-width: 450px) {
+
+    .cards,
+    .hotelgrid,
+    .agencygrid {
+        grid-template-columns: 1fr;
+    }
+
+    .bigfive {
+        gap: 8px;
+    }
+
+    .animal {
+        min-height: 195px;
+    }
+
+    .animal span {
+        font-size: 19px;
+    }
+
+    .hero h1 {
+        font-size: 68px;
+    }
+
+    .hero-actions {
+        flex-wrap: wrap;
+    }
+
+    footer {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================================
+   EXISTING HERO AND PHOTO ENHANCEMENTS
+========================================= */
+
+.hero {
+    min-height: 90vh;
+}
+
+.hero-bg {
+    background-position: center;
+    background-size: cover;
+}
+
+.animal .photo {
+    background-position: center;
+    background-size: cover;
+    color: transparent !important;
+}
+
+.animal span {
+    z-index: 2;
+}
+
+.hotel {
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    color: #fff;
+    background-color: #235345;
+}
+
+.hotel h3,
+.hotel span {
+    color: #fff !important;
+    text-shadow: 0 1px 6px #10271d;
+}
+
+/* =========================================
+   MTALIII — DESTINATION SPOTLIGHT PHOTOS
+========================================= */
+
+#results .mt-spotlight-photo {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
+    background: #e9eee9;
+}
+
+#results .mt-spotlight-photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#results .mt-spotlight-photo .category-tag {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    z-index: 2;
+}
+
+#results .mt-spotlight-card {
+    overflow: hidden;
+}
+
+/* =========================================
+   SPOTLIGHT — MOBILE PHOTOGRAPHS
+========================================= */
+
+@media (max-width: 600px) {
+
+    #results .mt-spotlight-photo {
+        height: 190px;
+    }
+}
+
+
+
+/* =========================================
+   MTALIII AFRICA
+   FIX DESTINATION SPOTLIGHT PHOTO OVERLAYS
+========================================= */
+
+/* Keep attraction photographs clean */
+#results .destination .photo {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 220px;
+    padding: 0;
+    overflow: hidden;
+    border-radius: 0;
+    background-color: #e9eee9;
+}
+
+/* Display the complete photograph area */
+#results .destination .photo img {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+    z-index: 1;
+}
+
+/* Remove decorative overlays */
+#results .destination .photo::before,
+#results .destination .photo::after {
+    content: none !important;
+    display: none !important;
+}
+
+/* Keep category labels small and readable */
+#results .destination .photo .category-tag {
+    position: absolute;
+    top: 12px;
+    bottom: auto;
+    left: 12px;
+    right: auto;
+    z-index: 5;
+
+    display: inline-block;
+    width: auto;
+    height: auto;
+    max-width: calc(100% - 24px);
+
+    padding: 6px 12px;
+    margin: 0;
+
+    background: rgba(255, 255, 255, 0.94);
+    color: #123c34;
+
+    border-radius: 30px;
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Hide empty placeholder elements */
+#results .destination .photo>span:not(.category-tag) {
+    display: none;
+}
+
+/* Keep card details below the image */
+#results .destination .body {
+    position: relative;
+    background: #fff;
+    z-index: 2;
+}
+
+/* Mobile display */
+@media (max-width: 600px) {
+    #results .destination .photo {
+        height: 190px;
+    }
+}
+
+
+/* =========================================
+   MTALIII AFRICA — LUXURY STAYS INTRO
+========================================= */
+
+#stayDirectory .stay-luxury-intro {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    align-items: center;
+    gap: 65px;
+    margin-bottom: 45px;
+}
+
+#stayDirectory .stay-luxury-content {
+    max-width: 620px;
+}
+
+#stayDirectory .stay-luxury-content h2 {
+    font-size: clamp(42px, 5vw, 76px);
+    line-height: 1.08;
+    letter-spacing: -2px;
+    margin: 22px 0;
+}
+
+#stayDirectory .stay-luxury-content h2 i {
+    display: block;
+    font-family: Georgia, serif;
+    font-weight: 400;
+}
+
+#stayDirectory .stay-luxury-content p {
+    max-width: 500px;
+    font-size: 17px;
+    line-height: 1.8;
+    color: var(--muted);
+}
+
+#stayDirectory .stay-luxury-image {
+    position: relative;
+    height: 420px;
+    border-radius: 22px;
+    overflow: hidden;
+    background: #e9eee9;
+    box-shadow: 0 20px 55px rgba(18, 60, 52, 0.12);
+}
+
+#stayDirectory .stay-luxury-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+#stayDirectory .stay-luxury-image:hover img {
+    transform: scale(1.035);
+}
+
+/* TABLETS */
+
+@media (max-width: 1000px) {
+
+    #stayDirectory .stay-luxury-intro {
+        gap: 30px;
+    }
+
+    #stayDirectory .stay-luxury-image {
+        height: 340px;
+    }
+
+}
+
+/* MOBILE PHONES */
+
+@media (max-width: 700px) {
+
+    #stayDirectory .stay-luxury-intro {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    #stayDirectory .stay-luxury-content h2 {
+        font-size: clamp(38px, 9vw, 58px);
+    }
+
+    #stayDirectory .stay-luxury-content p {
+        font-size: 15px;
+    }
+
+    #stayDirectory .stay-luxury-image {
+        height: 260px;
+        border-radius: 16px;
+    }
+
+}
+
+/* =========================================
+   MTALIII AFRICA — DESTINATION SPOTLIGHT
+   PREMIUM LANDSCAPE INTRODUCTION
+========================================= */
+
+#explore .spotlight-intro {
+    display: grid;
+    grid-template-columns: 1fr 1.12fr;
+    align-items: center;
+    gap: 55px;
+    margin-bottom: 45px;
+}
+
+#explore .spotlight-content {
+    max-width: 600px;
+}
+
+#explore .spotlight-content h2 {
+    font-size: clamp(42px, 5vw, 76px);
+    line-height: 1.08;
+    letter-spacing: -2px;
+    margin: 22px 0;
+}
+
+#explore .spotlight-content h2 i {
+    display: block;
+    font-family: Georgia, serif;
+    font-weight: 400;
+}
+
+#explore .spotlight-content p {
+    max-width: 510px;
+    font-size: 17px;
+    line-height: 1.8;
+    color: var(--muted);
+}
+
+#explore .spotlight-visual {
+    position: relative;
+    height: 410px;
+    border-radius: 22px;
+    overflow: hidden;
+    background: #e9eee9;
+    box-shadow: 0 20px 55px rgba(18, 60, 52, 0.12);
+}
+
+#explore .spotlight-visual img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+#explore .spotlight-visual:hover img {
+    transform: scale(1.035);
+}
+
+#explore .spotlight-image-label {
+    position: absolute;
+    left: 25px;
+    bottom: 25px;
+    z-index: 2;
+    padding: 15px 20px;
+    background: rgba(18, 60, 52, 0.86);
+    color: #fff;
+    border-radius: 12px;
+}
+
+#explore .spotlight-image-label span {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 2px;
+    font-weight: 800;
+    color: #f3c77d;
+}
+
+#explore .spotlight-image-label strong {
+    display: block;
+    font-size: 18px;
+    margin-top: 5px;
+}
+
+/* TABLETS */
+
+@media (max-width: 1000px) {
+    #explore .spotlight-intro {
+        gap: 30px;
+    }
+
+    #explore .spotlight-visual {
+        height: 340px;
+    }
+}
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+    #explore .spotlight-intro {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    #explore .spotlight-content h2 {
+        font-size: clamp(38px, 9vw, 58px);
+    }
+
+    #explore .spotlight-content p {
+        font-size: 15px;
+    }
+
+    #explore .spotlight-visual {
+        height: 260px;
+        border-radius: 16px;
+    }
+}
+
+/* =========================================
+   MTALIII AFRICA ACCOMMODATION BOOKING
+========================================= */
+
+#stayDetail:not([hidden]) {
+    display: block;
+    margin: 45px auto;
+    max-width: 1050px;
+}
+
+.mt-booking-panel {
+    background: #ffffff;
+    border: 1px solid #e5eae7;
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.07);
+    color: #183b33;
+}
+
+.mt-booking-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.mt-booking-eyebrow {
+    color: #b18b45;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.mt-booking-header h2 {
+    font-size: clamp(28px, 4vw, 42px);
+    margin: 12px 0;
+    color: #143c32;
+}
+
+.mt-booking-header p {
+    color: #6a7972;
+    max-width: 650px;
+    line-height: 1.7;
+}
+
+.mt-close {
+    width: 42px;
+    height: 42px;
+    border: 1px solid #dce5df;
+    border-radius: 50%;
+    background: #f5f8f6;
+    font-size: 26px;
+    cursor: pointer;
+}
+
+.mt-booking-panel h3 {
+    font-size: 19px;
+    color: #173d32;
+    margin: 26px 0 15px;
+}
+
+.mt-booking-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.mt-three-columns {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.mt-booking-panel label {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    color: #334c43;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.mt-booking-panel input,
+.mt-booking-panel select,
+.mt-booking-panel textarea {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 14px 15px;
+    background: #fafcfb;
+    border: 1px solid #dbe5df;
+    border-radius: 11px;
+    font: inherit;
+    font-size: 14px;
+    color: #183b33;
+}
+
+.mt-booking-panel input:focus,
+.mt-booking-panel select:focus,
+.mt-booking-panel textarea:focus {
+    outline: none;
+    border-color: #2c8068;
+    box-shadow: 0 0 0 3px rgba(44, 128, 104, 0.12);
+}
+
+.mt-full-field {
+    margin-top: 15px;
+}
+
+.mt-itinerary {
+    background: #f6f9f7;
+    border: 1px solid #e2ebe5;
+    border-radius: 18px;
+    padding: 22px;
+    margin: 28px 0;
+}
+
+.mt-itinerary-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.mt-itinerary-heading h3 {
+    margin: 0;
+}
+
+.mt-itinerary-heading span {
+    font-size: 12px;
+    font-weight: 700;
+    color: #38715e;
+}
+
+.mt-itinerary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    background: white;
+    border: 1px solid #e3ebe6;
+    border-radius: 12px;
+    padding: 14px;
+    margin: 12px 0;
+}
+
+.mt-itinerary-item strong,
+.mt-itinerary-item small {
+    display: block;
+}
+
+.mt-itinerary-item small {
+    color: #798780;
+    margin-top: 4px;
+}
+
+.mt-remove {
+    border: none;
+    background: #fff0ef;
+    color: #a13d35;
+    border-radius: 9px;
+    padding: 9px 12px;
+    cursor: pointer;
+}
+
+.mt-booking-summary {
+    background: #173d32;
+    color: white;
+    padding: 25px;
+    border-radius: 17px;
+    margin: 25px 0;
+}
+
+.mt-booking-summary h3 {
+    color: white;
+    margin-top: 0;
+}
+
+.mt-booking-summary p {
+    color: #ffffff;
+    line-height: 1.7;
+}
+
+.mt-booking-summary small {
+    color: #d4e3dc;
+    line-height: 1.6;
+}
+
+.mt-booking-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 22px;
+}
+
+.mt-primary-btn,
+.mt-secondary-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 11px;
+    padding: 14px 20px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.mt-primary-btn {
+    background: #176b50;
+    color: #ffffff;
+    border: 1px solid #176b50;
+}
+
+.mt-primary-btn:hover {
+    background: #10543e;
+}
+
+.mt-secondary-btn {
+    background: #ffffff;
+    color: #176b50;
+    border: 1px solid #cbded3;
+}
+
+.mt-secondary-btn:hover {
+    background: #edf5ef;
+}
+
+.mt-booking-note {
+    margin-top: 17px;
+    color: #78877f;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.mt-error {
+    color: #aa302d;
+    font-weight: 700;
+    margin-top: 15px;
+}
+
+.mt-enquiry-result {
+    margin-top: 25px;
+    padding: 23px;
+    border: 1px solid #cddfd4;
+    border-radius: 16px;
+    background: #f5faf7;
+}
+
+.mt-enquiry-result textarea {
+    width: 100%;
+    margin-top: 15px;
+    min-height: 220px;
+    resize: vertical;
+}
+
+@media (max-width: 700px) {
+    .mt-booking-panel {
+        padding: 22px 16px;
+    }
+
+    .mt-booking-grid,
+    .mt-three-columns {
+        grid-template-columns: 1fr;
+    }
+
+    .mt-booking-header h2 {
+        font-size: 28px;
+    }
+
+    .mt-booking-actions {
+        flex-direction: column;
+    }
+
+    .mt-primary-btn,
+    .mt-secondary-btn {
+        width: 100%;
+    }
+}
+
+/* Mtaliii Africa — refined accommodation planner */
+
+.mt-back-btn {
+    padding: 12px 18px;
+    background: #edf5ef;
+    color: #176b50;
+    border: 1px solid #cfe3d5;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.mt-back-btn:hover {
+    background: #dfeee4;
+}
+
+.mt-exploring {
+    padding: 24px;
+    margin-bottom: 28px;
+    background: #f3f8f5;
+    border: 1px solid #dce9e0;
+    border-radius: 16px;
+}
+
+.mt-exploring h3 {
+    margin: 10px 0 4px;
+    font-size: 25px;
+    color: #173d32;
+}
+
+.mt-exploring p {
+    margin-bottom: 14px;
+    color: #65766b;
+    line-height: 1.6;
+}
+
+.mt-add-destination {
+    margin-top: 20px;
+    padding: 22px;
+    background: #fff;
+    border: 1px solid #dce9e0;
+    border-radius: 16px;
+}
+
+.mt-add-destination h4 {
+    margin: 0 0 10px;
+    color: #173d32;
+    font-size: 17px;
+}
+
+.mt-add-destination p {
+    color: #65766b;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.mt-add-message {
+    min-height: 18px;
+    margin: 10px 0 0;
+    color: #176b50;
+    font-size: 13px;
+}
+
+.mt-booking-success {
+    max-width: 650px;
+    margin: 35px auto;
+    padding: 50px 32px;
+    background: #fff;
+    border: 1px solid #dce9e0;
+    border-radius: 22px;
+    text-align: center;
+}
+
+.mt-success-icon {
+    width: 72px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+    border-radius: 50%;
+    background: #e5f4e9;
+    color: #176b50;
+    font-size: 36px;
+    font-weight: 700;
+}
+
+.mt-booking-success h2 {
+    margin-bottom: 15px;
+    color: #173d32;
+    font-size: clamp(26px, 4vw, 38px);
+}
+
+.mt-booking-success p {
+    color: #65766b;
+    line-height: 1.7;
+}
+
+.mt-reference {
+    padding: 22px;
+    margin: 28px 0;
+    border-radius: 14px;
+    background: #f3f8f5;
+}
+
+.mt-reference small {
+    display: block;
+    color: #748a7c;
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+.mt-reference strong {
+    display: block;
+    margin-top: 10px;
+    color: #176b50;
+    font-size: 26px;
+    letter-spacing: 2px;
+}
+
+.mt-success-note {
+    font-size: 12px;
+}
+
+@media (max-width: 700px) {
+    .mt-booking-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .mt-back-btn {
+        width: 100%;
+    }
+
+    .mt-add-destination {
+        padding: 16px;
+    }
+
+    .mt-booking-success {
+        padding: 35px 20px;
+    }
+}
+
+
+/* MTALIII AFRICA — COMPACT BOOKING MODAL */
+
+body.mt-modal-open {
+    overflow: hidden;
+}
+
+.mt-stay-modal[hidden] {
+    display: none !important;
+}
+
+.mt-stay-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+}
+
+.mt-stay-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(8, 26, 20, .72);
+    backdrop-filter: blur(5px);
+}
+
+.mt-stay-dialog {
+    position: relative;
+    width: min(100%, 780px);
+    max-height: min(92vh, 900px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background: #fff;
+    border-radius: 22px;
+    box-shadow: 0 30px 90px rgba(0, 0, 0, .24);
+    outline: none;
+}
+
+.mt-modal-header {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 24px 28px;
+    background: #fff;
+    border-bottom: 1px solid #e5ece7;
+}
+
+.mt-modal-header small {
+    color: #3a8764;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+.mt-modal-header h2 {
+    margin: 7px 0;
+    color: #153e2d;
+    font-size: clamp(23px, 4vw, 32px);
+}
+
+.mt-modal-header p {
+    margin: 0;
+    color: #64756a;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.mt-modal-close {
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    border: 0;
+    border-radius: 50%;
+    background: #f0f5f1;
+    color: #214e37;
+    font-size: 26px;
+    cursor: pointer;
+}
+
+.mt-modal-body {
+    padding: 25px 28px 30px;
+}
+
+.mt-modal-body h3 {
+    margin: 24px 0 15px;
+    color: #173f2d;
+    font-size: 18px;
+}
+
+.mt-stay-item {
+    margin-bottom: 13px;
+    padding: 18px;
+    border: 1px solid #dce8df;
+    border-radius: 15px;
+    background: #f9fcfa;
+}
+
+.mt-stay-item-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.mt-stay-item-head strong {
+    display: block;
+    color: #193e2d;
+    font-size: 16px;
+}
+
+.mt-stay-item-head small {
+    display: block;
+    margin-top: 4px;
+    color: #758477;
+}
+
+.mt-remove-stay {
+    padding: 7px 12px;
+    border: 1px solid #f0d8d8;
+    border-radius: 9px;
+    background: #fff;
+    color: #a44242;
+    cursor: pointer;
+}
+
+.mt-date-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.mt-date-grid label,
+.mt-modal-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    color: #355243;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.mt-date-grid input,
+.mt-date-grid select,
+.mt-modal-field select,
+.mt-modal-field textarea {
+    width: 100%;
+    min-width: 0;
+    min-height: 43px;
+    padding: 10px 12px;
+    border: 1px solid #d3e0d7;
+    border-radius: 10px;
+    background: #fff;
+    color: #183b2c;
+    font: inherit;
+    box-sizing: border-box;
+}
+
+.mt-night-count {
+    margin-top: 12px;
+    color: #34815b;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.mt-add-stay {
+    margin-top: 18px;
+    padding: 18px;
+    background: #f0f7f2;
+    border: 1px solid #dbe9df;
+    border-radius: 15px;
+}
+
+.mt-add-stay h4 {
+    margin: 0 0 15px;
+    color: #184b34;
+}
+
+.mt-hint {
+    color: #758479;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.mt-stay-summary {
+    margin: 24px 0;
+    padding: 18px;
+    border-radius: 15px;
+    background: #183e2e;
+    color: #fff;
+}
+
+.mt-stay-summary h3 {
+    margin-top: 0;
+    color: #fff;
+}
+
+.mt-stay-summary>div {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 9px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, .14);
+    font-size: 13px;
+}
+
+.mt-stay-summary strong {
+    text-align: right;
+}
+
+.mt-guest-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.mt-modal-field {
+    margin-top: 18px;
+}
+
+.mt-modal-submit {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    padding: 15px;
+    border: 0;
+    border-radius: 12px;
+    background: #176a49;
+    color: #fff;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.mt-modal-submit:hover {
+    background: #11583c;
+}
+
+.mt-modal-submit:disabled {
+    opacity: .65;
+    cursor: wait;
+}
+
+.mt-error {
+    color: #b33939;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.mt-modal-success {
+    padding: 55px 30px;
+    text-align: center;
+}
+
+.mt-modal-success h2 {
+    color: #164631;
+}
+
+.mt-modal-success p {
+    color: #687a6e;
+    line-height: 1.7;
+}
+
+.mt-success-check {
+    display: grid;
+    place-items: center;
+    width: 65px;
+    height: 65px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background: #e3f3e8;
+    color: #167448;
+    font-size: 32px;
+}
+
+.mt-success-reference {
+    margin: 25px 0;
+    padding: 17px;
+    background: #f1f7f2;
+    border-radius: 12px;
+}
+
+.mt-success-reference strong {
+    margin-left: 8px;
+    color: #16623f;
+}
+
+@media (max-width: 600px) {
+    .mt-stay-modal {
+        padding: 0;
+    }
+
+    .mt-stay-dialog {
+        width: 100%;
+        max-height: 100dvh;
+        height: 100dvh;
+        border-radius: 0;
+    }
+
+    .mt-modal-header,
+    .mt-modal-body {
+        padding: 20px 16px;
+    }
+
+    .mt-date-grid,
+    .mt-guest-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* MTALIII AFRICA — DETAILED JOURNEY SUMMARY */
+
+.mt-journey-locations {
+    display: block !important;
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.mt-journey-locations h4 {
+    margin: 0 0 15px;
+    color: #ffffff;
+    font-size: 15px;
+}
+
+.mt-journey-stop {
+    display: block;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.mt-journey-stop:last-child {
+    border-bottom: 0;
+}
+
+.mt-journey-stop-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.mt-journey-stop-title strong {
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.mt-journey-stop-title span {
+    color: #b9d8c5;
+    font-size: 12px;
+}
+
+.mt-journey-stop-dates {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 22px;
+    font-size: 12px;
+    color: #d4e5d9;
+}
+
+.mt-journey-stop-dates span {
+    display: inline-flex;
+    gap: 5px;
+}
+
+.mt-journey-stop-dates strong {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.mt-journey-stop small {
+    display: block;
+    margin-top: 9px;
+    color: #a9d9b8;
+    font-size: 12px;
+}
+
+.mt-journey-empty {
+    color: #d4e5d9;
+    font-size: 13px;
+}
+
+@media (max-width: 600px) {
+    .mt-journey-stop-title {
+        align-items: flex-start;
+    }
+
+    .mt-journey-stop-dates {
+        flex-direction: column;
+        gap: 6px;
+    }
+}
+/* MTALIII AFRICA — TOUR PARTNERS ONLY */
+
+#agencies .mtaliii-partner-intro {
+  margin: 24px 0;
+  padding: 25px;
+  border-radius: 18px;
+  background: #f5f8f5;
+  border: 1px solid #e2ebe2;
+}
+
+#agencies .mtaliii-partner-intro h3 {
+  margin: 0 0 10px;
+  font-size: 22px;
+}
+
+#agencies .mtaliii-partner-intro p {
+  margin: 0;
+  line-height: 1.7;
+}
+
+#agencies .mtaliii-demo-partners {
+  margin-top: 35px;
+  padding-top: 25px;
+  border-top: 1px solid #e5e5e5;
+}
+
+#agencies .mtaliii-demo-partners h3 {
+  margin-bottom: 10px;
+}
+
+#agencies .mtaliii-demo-partners > p {
+  margin-bottom: 20px;
+  line-height: 1.7;
+}
+
+#agencies .agencygrid {
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  #agencies .mtaliii-partner-intro {
+    padding: 18px;
+  }
+}
+/* MTALIII AFRICA — AGENCY REGISTRATION */
+
+#register {
+  scroll-margin-top: 90px;
+}
+
+#register[hidden] {
+  display: none !important;
+}
+
+#register .portal-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: stretch;
+}
+
+#register #registerForm {
+  width: 100%;
+  min-width: 0;
+}
+
+#register .agency-registration-visual {
+  position: relative;
+  min-height: 430px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #193d2b;
+}
+
+#register .agency-registration-visual img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  object-fit: cover;
+}
+
+#register .agency-registration-visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, .75),
+    rgba(0, 0, 0, .05) 70%
+  );
+}
+
+#register .agency-registration-caption {
+  position: absolute;
+  z-index: 1;
+  bottom: 28px;
+  left: 28px;
+  right: 28px;
+  color: white;
+}
+
+#register .agency-registration-caption span {
+  font-size: 11px;
+  letter-spacing: 2px;
+  font-weight: 700;
+}
+
+#register .agency-registration-caption h3 {
+  margin: 12px 0;
+  color: white;
+  font-size: 27px;
+}
+
+#register .agency-registration-caption p {
+  margin: 0;
+  color: #f0f0f0;
+  line-height: 1.6;
+}
+
+@media (max-width: 800px) {
+  #register .portal-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #register .agency-registration-visual {
+    min-height: 260px;
+  }
+}
+
+/* MTALIII AFRICA — COMPACT PARTNER REGISTRATION */
+
+#register {
+  padding-top: 35px;
+  padding-bottom: 40px;
+}
+
+#register .section-head {
+  margin-bottom: 20px;
+}
+
+#register .section-head h2 {
+  font-size: clamp(28px, 3vw, 42px);
+  line-height: 1.15;
+}
+
+#register .section-head p {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+#register .portal-grid {
+  width: 100%;
+  max-width: none;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+#register #registerForm {
+  width: 100%;
+  max-width: none;
+  padding: 24px;
+}
+
+#register #registerForm h3 {
+  font-size: 24px;
+  margin-bottom: 14px;
+}
+
+#register #registerForm label {
+  margin-bottom: 10px;
+}
+
+#register #registerForm input {
+  min-height: 42px;
+}
+
+#register .agency-registration-visual {
+  position: relative;
+  min-height: 0;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 10px;
+  padding: 10px;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #e8eee6;
+}
+
+#register .agency-registration-visual > img {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+#register .agency-registration-visual::after {
+  display: none;
+}
+
+#register .agency-registration-caption {
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  bottom: 22px;
+  padding: 14px 18px;
+  background: rgba(14, 49, 34, .86);
+  border-radius: 12px;
+  color: white;
+}
+
+#register .agency-registration-caption h3 {
+  font-size: 20px;
+  margin: 5px 0;
+}
+
+#register .agency-registration-caption p {
+  font-size: 12px;
+}
+
+@media (max-width: 800px) {
+  #register .portal-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #register .agency-registration-visual {
+    height: 440px;
+  }
+}
+
+
+/* MTALIII AFRICA — COMPACT REGISTRATION FINAL LAYOUT */
+
+#register {
+  padding-top: 24px !important;
+  padding-bottom: 28px !important;
+}
+
+#register .section-head {
+  margin-bottom: 14px !important;
+}
+
+#register .section-head h2 {
+  font-size: clamp(26px, 2.8vw, 38px);
+  line-height: 1.15;
+}
+
+#register .portal-grid {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr) !important;
+  gap: 16px !important;
+  align-items: stretch;
+  width: 100%;
+}
+
+#register #registerForm {
+  padding: 20px !important;
+  margin: 0;
+}
+
+#register #registerForm h3 {
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+
+#register #registerForm label {
+  margin-bottom: 8px;
+}
+
+#register #registerForm input,
+#register #registerForm select,
+#register #registerForm textarea {
+  padding: 9px 12px;
+  min-height: 40px;
+}
+
+#register .agency-registration-visual {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  grid-template-rows: minmax(0, 1fr) !important;
+  gap: 10px !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  padding: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+#register .agency-registration-visual > img {
+  position: relative !important;
+  inset: auto !important;
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+#register .agency-registration-caption {
+  grid-column: 1 / -1;
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+  padding: 12px 16px;
+}
+
+#register .agency-registration-caption h3 {
+  font-size: 18px;
+  margin: 4px 0;
+}
+
+#register .agency-registration-caption p {
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+@media (max-width: 800px) {
+  #register .portal-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  #register .agency-registration-visual {
+    height: 260px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  #register .agency-registration-visual {
+    height: 210px !important;
+    gap: 6px !important;
+  }
+
+  #register .agency-registration-caption {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    padding: 8px 10px;
+  }
+}
+
+
+/* MTALIII — AGENCY REGISTRATION FEEDBACK */
+
+#register #registerMessage:not(:empty) {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #edf5ef;
+  border: 1px solid #b9d9c2;
+  color: #174d2e;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+#register #registerMessage:empty {
+  display: none !important;
+}
+
+
+/* MTALIII AGENCY REGISTRATION — FEEDBACK */
+
+#register #registerMessage[data-status="success"] {
+  display: block !important;
+  background: #e8f5eb !important;
+  border: 1px solid #a9d7b6 !important;
+  color: #176234 !important;
+  padding: 12px 14px !important;
+  border-radius: 10px;
+}
+
+#register #registerMessage[data-status="error"] {
+  display: block !important;
+  background: #fff0ee !important;
+  border: 1px solid #efb9b3 !important;
+  color: #a52d25 !important;
+  padding: 12px 14px !important;
+  border-radius: 10px;
+}
+
+#register #registerMessage[data-status="loading"] {
+  display: block !important;
+  background: #eef3f8 !important;
+  border: 1px solid #c8d9e8 !important;
+  color: #315879 !important;
+  padding: 12px 14px !important;
+  border-radius: 10px;
+}
+
+
+/* DESTINATION SPOTLIGHT NAVIGATION */
+
+#destinations {
+  display: block;
+  position: relative;
+  scroll-margin-top: 115px;
+}
+
+
+/* MTALIII AFRICA — RELIABLE AGENCY REGISTRATION */
+
+#register {
+  scroll-margin-top: 115px;
+}
+
+#register[hidden] {
+  display: none !important;
+}
+
+#register #registerMessage:empty {
+  display: none !important;
+}
+
+#register #registerMessage:not(:empty) {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  margin-top: 12px;
+  padding: 12px 15px;
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+#register #registerMessage[data-status="success"] {
+  background: #e8f5eb !important;
+  color: #176234 !important;
+  border: 1px solid #a9d7b6 !important;
+}
+
+#register #registerMessage[data-status="error"] {
+  background: #fff0ee !important;
+  color: #a52d25 !important;
+  border: 1px solid #efb9b3 !important;
+}
+
+#register #registerMessage[data-status="loading"] {
+  background: #eef3f8 !important;
+  color: #315879 !important;
+  border: 1px solid #c8d9e8 !important;
+}
+
+
+/* MTALIII — PERMANENT REGISTRATION VISIBILITY FIX */
+
+#register:not([hidden]) {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  scroll-margin-top: 115px;
+}
+
+
+/* MTALIII — COPYRIGHT ONE-LINE FIX */
+footer > .copyright,
+footer > .mtaliii-one-line,
+footer > .mtaliii-final-copyright {
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    display: block !important;
+    white-space: nowrap !important;
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+    margin: 0 !important;
+    padding: 14px 0 0 !important;
+    text-align: left !important;
+}
+
+footer > .copyright strong {
+    display: inline !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+}
+
+@media (max-width: 700px) {
+    footer > .copyright {
+        overflow-x: auto !important;
+    }
+}
+
+/* MTALIII AFRICA — WHATSAPP CONTACT */
+
+.mtaliii-whatsapp-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 11px 20px;
+    margin: 10px 0;
+    background: #167a4b;
+    color: #ffffff !important;
+    border-radius: 8px;
+    text-decoration: none !important;
+    font-weight: 600;
+    font-size: 14px;
+    transition: background .2s ease;
+}
+
+.mtaliii-whatsapp-link:hover {
+    background: #105c38;
+}
+
+.mtaliii-whatsapp-link:focus-visible {
+    outline: 3px solid #f2c94c;
+    outline-offset: 3px;
+}
+
+/* MTALIII — FLOATING BUTTONS NEAR SCREEN EDGE */
+.mtaliii-whatsapp-floating {
+    right: 8px !important;
+    left: auto !important;
+    bottom: 96px !important;
+    width: 54px !important;
+    height: 54px !important;
+    position: fixed !important;
+    z-index: 99999 !important;
+}
+
+@media (max-width: 600px) {
+    .mtaliii-whatsapp-floating {
+        right: 6px !important;
+    }
+}
