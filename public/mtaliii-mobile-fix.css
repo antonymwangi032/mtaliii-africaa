@@ -1,0 +1,130 @@
+/* MTALIII AFRICA — RESPONSIVE MOBILE IMPROVEMENTS */
+/* Desktop layout remains unchanged */
+
+@media (max-width: 1000px) {
+  .cards,
+  .hotelgrid,
+  .agencygrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cards > *,
+  .hotelgrid > *,
+  .agencygrid > * {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 700px) {
+  .hero {
+    min-height: 580px;
+    height: auto;
+  }
+
+  .hero-bg {
+    background-position: 58% center;
+    background-size: cover;
+  }
+
+  .hero-inner {
+    padding: 95px 6% 115px;
+    max-width: 100%;
+  }
+
+  .hero h1 {
+    font-size: clamp(42px, 11vw, 68px);
+    letter-spacing: -2px;
+    line-height: 1.05;
+    overflow-wrap: break-word;
+  }
+
+  .hero p {
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 100%;
+  }
+
+  .hero-actions {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .hero-counter {
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 30px;
+  }
+
+  .hero-counter #heroCaption {
+    margin-left: 0;
+  }
+
+  .section {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+  .cards,
+  .hotelgrid,
+  .agencygrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .searchrow,
+  .stays .searchrow,
+  .twocol,
+  .planning,
+  .portal-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  input,
+  select,
+  textarea {
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .form input,
+  .form select,
+  .form textarea {
+    font-size: 16px;
+  }
+
+  .hero-bottom {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .nav {
+    max-width: 100%;
+  }
+
+  .nav img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  #register .portal-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .hero h1 {
+    font-size: clamp(38px, 10vw, 48px);
+  }
+
+  .hero-inner {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+  .hero-actions > * {
+    max-width: 100%;
+  }
+
+  .bigfive {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
