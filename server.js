@@ -1011,6 +1011,97 @@ app.post("/api/admin/offers", auth, admin, async (req, res) => {
   }
 });
 
+
+/* MTALIII_ADMIN_EDIT_OFFER_V1 */
+app.put("/api/admin/offers/:id", auth, admin, async (req, res) => {
+  try {
+    const b = req.body || {};
+    const title = String(b.title || "").trim();
+    const description = String(b.description || "").trim();
+    const destinations = String(b.destinations || "").trim();
+    const duration = String(b.duration || "").trim();
+    const owner = String(b.owner || "").trim();
+    const status = String(b.status || "").trim();
+    const people = Number(b.people);
+    const price = Number(b.price);
+    const validFrom = b.validFrom || null;
+    const validUntil = b.validUntil || null;
+    const imageUrl = String(b.imageUrl || "").trim();
+
+    if (!title || title.length > 120 ||
+        !description || description.length > 1200 ||
+        !destinations || destinations.length > 350 ||
+        !duration || duration.length > 80 ||
+        !Number.isInteger(people) || people < 1 ||
+        !Number.isFinite(price) || price < 0 ||
+        !["approved", "pending", "rejected"].includes(status) ||
+        !["mtaliii", "agency"].includes(owner)) {
+      return res.status(400).json({ error: "Invalid offer details." });
+    }
+
+    if (validFrom && validUntil && validFrom > validUntil) {
+      return res.status(400).json({ error: "Invalid validity dates." });
+    }
+
+    let agentId = null;
+
+    if (owner === "agency") {
+      agentId = String(b.agentId || "").trim();
+
+      const agency = await database.query(
+        `SELECT "id" FROM "Agency"
+         WHERE "id" = $1 AND "status" = 'approved'
+         AND "demo" = false LIMIT 1`,
+        [agentId]
+      );
+
+      if (!agency.rowCount) {
+        return res.status(400).json({
+          error: "Select an approved agency."
+        });
+      }
+    }
+
+    const result = await database.query(
+      `UPDATE "Offer"
+       SET "agentId" = $1,
+           "title" = $2,
+           "description" = $3,
+           "price" = $4,
+           "duration" = $5,
+           "destinations" = $6,
+           "status" = $7,
+           "owner" = $8,
+           "people" = $9,
+           "validFrom" = $10::date,
+           "validUntil" = $11::date,
+           "imageUrl" = $12
+       WHERE "id" = $13
+       RETURNING "id"`,
+      [
+        agentId, title, description, price, duration,
+        destinations, status, owner, people,
+        validFrom, validUntil, imageUrl || null,
+        req.params.id
+      ]
+    );
+
+    if (!result.rowCount) {
+      return res.status(404).json({ error: "Offer not found." });
+    }
+
+    recordAdminAction(req, "offer_details_updated", req.params.id, title);
+
+    res.json({
+      success: true,
+      message: "Tour offer updated successfully."
+    });
+  } catch (error) {
+    console.error("Admin offer editing failed:", error.message);
+    res.status(500).json({ error: "Unable to update tour offer." });
+  }
+});
+
 // ADMIN — UPDATE OFFER STATUS
 
 app.patch("/api/admin/offers/:id", auth, admin, async (req, res) => {

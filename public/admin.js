@@ -415,6 +415,7 @@ function offerCard(offer) {
             </div>
 
             <div class="admin-record-actions">
+                <button type="button" class="mt-offer-save" data-edit-offer="${esc(offer.id)}">Edit Offer</button>
                 ${statusSelect("offers", offer, [
                     "approved", "rejected", "pending"
                 ])}
@@ -691,6 +692,83 @@ dashboardRoot.addEventListener("click", async event => {
 });
 
 
+
+/* MTALIII_ADMIN_EDIT_OFFER_UI_V1 */
+dashboardRoot.addEventListener("click", event => {
+  const editButton = event.target.closest("[data-edit-offer]");
+  const cancelButton = event.target.closest("[data-cancel-offer-edit]");
+
+  if (cancelButton) {
+    const form = document.querySelector("#mtCreateOffer");
+    if (!form) return;
+
+    form.reset();
+    form.dataset.editId = "";
+
+    const heading = document.querySelector(".mt-offer-panel h3");
+    if (heading) heading.textContent = "Create New Tour Offer";
+
+    const save = form.querySelector(".mt-offer-save");
+    if (save) save.textContent = "+ Save Tour Offer";
+
+    cancelButton.remove();
+    return;
+  }
+
+  if (!editButton || !dashboardData) return;
+
+  const offer = dashboardData.offers.find(
+    item => String(item.id) === editButton.dataset.editOffer
+  );
+
+  if (!offer) return;
+
+  const form = document.querySelector("#mtCreateOffer");
+  if (!form) return;
+
+  const fields = [
+    "owner", "agentId", "title", "destinations",
+    "description", "people", "duration", "price",
+    "status", "validFrom", "validUntil", "imageUrl"
+  ];
+
+  for (const name of fields) {
+    const input = form.elements.namedItem(name);
+    if (!input) continue;
+
+    let value = offer[name] ?? "";
+
+    if (name === "validFrom" || name === "validUntil") {
+      value = value
+        ? String(value).slice(0, 10)
+        : "";
+    }
+
+    input.value = value;
+  }
+
+  form.dataset.editId = offer.id;
+
+  const heading = document.querySelector(".mt-offer-panel h3");
+  if (heading) heading.textContent = "Edit Tour Offer";
+
+  const save = form.querySelector(".mt-offer-save");
+  if (save) save.textContent = "Save Changes";
+
+  if (!form.querySelector("[data-cancel-offer-edit]")) {
+    const cancel = document.createElement("button");
+    cancel.type = "button";
+    cancel.dataset.cancelOfferEdit = "true";
+    cancel.textContent = "Cancel Editing";
+    cancel.className = "mt-offer-save";
+    cancel.style.marginLeft = "10px";
+    cancel.style.background = "#66756e";
+    save.insertAdjacentElement("afterend", cancel);
+  }
+
+  form.scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
 /* MTALIII_ADMIN_OFFER_FORM_V1 */
 dashboardRoot.addEventListener("submit", async event => {
   if (event.target.id !== "mtCreateOffer") return;
@@ -706,10 +784,23 @@ dashboardRoot.addEventListener("submit", async event => {
   feedback.textContent = "Saving tour offer...";
 
   try {
-    await api("/api/admin/offers", "POST", data);
+    const editId = form.dataset.editId;
+
+    if (editId) {
+      await api(
+        "/api/admin/offers/" + encodeURIComponent(editId),
+        "PUT",
+        data
+      );
+    } else {
+      await api("/api/admin/offers", "POST", data);
+    }
     await loadDashboard();
     const notice = document.querySelector("#adminFeedback");
-    if (notice) notice.textContent = "Tour offer saved successfully.";
+    if (notice) notice.textContent =
+      editId
+        ? "Tour offer updated successfully."
+        : "Tour offer saved successfully.";
   } catch (error) {
     feedback.textContent = error.message;
     button.disabled = false;
